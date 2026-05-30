@@ -24,12 +24,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-       - run: npm run build
-       - run: touch out/.nojekyll
-       - run: ls -la out/_next/static/css/
-       - uses: actions/upload-pages-artifact@v3
-         with:
-           path: out
+      - run: npm run build
+      - run: touch out/.nojekyll
+      - run: ls -la out/_next/static/css/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
 
   deploy:
     runs-on: ubuntu-latest
