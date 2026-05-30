@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   basePath: "/sitev3",
-  assetPrefix: "/sitev3/",
+  trailingSlash: true,
 }
 
 export default nextConfig
