@@ -87,6 +87,7 @@
     background-image:
       radial-gradient(#000000 0.5px, transparent 0.5px);
     background-size: 24px 24px;
+    background-attachment: fixed;
     }
   html {
     @apply font-sans scroll-smooth;
