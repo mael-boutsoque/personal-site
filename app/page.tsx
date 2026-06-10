@@ -6,6 +6,8 @@ import { PricingInteraction } from "@/components/ui/pricing-interaction"
 import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui"
 import { SectionTitle } from "@/components/ui/section-title"
 import { Footer } from "@/components/ui/footer"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { AnimatedCard } from "@/components/ui/animated-card"
 
 export default function Home() {
   return (
@@ -13,53 +15,61 @@ export default function Home() {
       <FloatingHeader />
       <CTASection />
       <section id="education" className="w-full px-4 md:px-6 py-24 md:py-32">
-        <div className="max-w-6xl mx-auto">
+        <AnimatedSection className="max-w-6xl mx-auto">
           <SectionTitle id="01" title="Education" />
           <PricingInteraction />
-        </div>
+        </AnimatedSection>
       </section>
       <section id="projects" className="w-full px-4 md:px-6 py-24 md:py-32">
-        <div className="max-w-6xl mx-auto">
+        <AnimatedSection className="max-w-6xl mx-auto">
           <SectionTitle id="02" title="Projects" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <GlassBlogCard
-              title="Autonomous Drone"
-              excerpt="Built a quadcopter with custom flight controller using FreeRTOS and IMU sensors for stable autonomous flight."
-              image="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"
-              author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
-              date="2025"
-              readTime="C, FreeRTOS, IMU"
-              tags={["Embedded", "Drone"]}
-            />
-            <GlassBlogCard
-              title="Smart Grid Simulator"
-              excerpt="Simulated power distribution network with load balancing algorithms, real-time monitoring, and fault detection."
-              image="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
-              author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
-              date="2024"
-              readTime="Python, Simulink"
-              tags={["Simulation", "Energy"]}
-            />
-            <GlassBlogCard
-              title="Weather Station IoT"
-              excerpt="IoT weather station with LoRaWAN connectivity, collecting environmental data with ESP32 microcontrollers."
-              image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
-              author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
-              date="2024"
-              readTime="ESP32, C++, LoRa"
-              tags={["IoT", "Embedded"]}
-            />
-            <GlassBlogCard
-              title="Robot Arm"
-              excerpt="3D-printed robotic arm with inverse kinematics control using Arduino and Python for precise movement."
-              image="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
-              author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
-              date="2023"
-              readTime="Arduino, Python"
-              tags={["Robotics", "Embedded"]}
-            />
+            <AnimatedCard index={0}>
+              <GlassBlogCard
+                title="Autonomous Drone"
+                excerpt="Built a quadcopter with custom flight controller using FreeRTOS and IMU sensors for stable autonomous flight."
+                image="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"
+                author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
+                date="2025"
+                readTime="C, FreeRTOS, IMU"
+                tags={["Embedded", "Drone"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={1}>
+              <GlassBlogCard
+                title="Smart Grid Simulator"
+                excerpt="Simulated power distribution network with load balancing algorithms, real-time monitoring, and fault detection."
+                image="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+                author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
+                date="2024"
+                readTime="Python, Simulink"
+                tags={["Simulation", "Energy"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={2}>
+              <GlassBlogCard
+                title="Weather Station IoT"
+                excerpt="IoT weather station with LoRaWAN connectivity, collecting environmental data with ESP32 microcontrollers."
+                image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
+                date="2024"
+                readTime="ESP32, C++, LoRa"
+                tags={["IoT", "Embedded"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={3}>
+              <GlassBlogCard
+                title="Robot Arm"
+                excerpt="3D-printed robotic arm with inverse kinematics control using Arduino and Python for precise movement."
+                image="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
+                author={{ name: "Mael B.", avatar: "https://github.com/shadcn.png" }}
+                date="2023"
+                readTime="Arduino, Python"
+                tags={["Robotics", "Embedded"]}
+              />
+            </AnimatedCard>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
       <Skills />
       <Footer
