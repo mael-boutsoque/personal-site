@@ -33,7 +33,20 @@ export function Navbar() {
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id)
-    if (el) el.scrollIntoView({ behavior: "smooth" })
+    if (!el) return
+    const target = el.getBoundingClientRect().top + window.scrollY
+    const start = window.scrollY
+    const diff = target - start
+    const duration = 600
+    let startTime: number | null = null
+    function step(time: number) {
+      if (startTime === null) startTime = time
+      const t = Math.min((time - startTime) / duration, 1)
+      const ease = 1 - (1 - t) ** 3
+      window.scrollTo(0, start + diff * ease)
+      if (t < 1) requestAnimationFrame(step)
+    }
+    requestAnimationFrame(step)
   }
 
   return (

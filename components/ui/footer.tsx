@@ -59,7 +59,7 @@ export function Footer({
                 <li key={i} className="my-1 mx-2 shrink-0">
                   <a
                     href={link.href}
-                    className="text-sm text-primary underline-offset-4 hover:underline"
+                    className="text-sm text-primary underline-offset-4 hover:underline transition-all duration-200"
                   >
                     {link.label}
                   </a>
@@ -73,7 +73,7 @@ export function Footer({
                 <li key={i} className="my-1 mx-3 shrink-0">
                   <a
                     href={link.href}
-                    className="text-sm text-muted-foreground underline-offset-4 hover:underline"
+                    className="text-sm text-muted-foreground underline-offset-4 hover:underline transition-all duration-200"
                   >
                     {link.label}
                   </a>

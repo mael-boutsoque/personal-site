@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { BookOpen, Clock } from "lucide-react";
+import { BookOpen, Info } from "lucide-react";
 
 interface GlassBlogCardProps {
   title?: string;
@@ -68,7 +68,7 @@ export function GlassBlogCard({
               <Badge
                 key={index}
                 variant="secondary"
-                className="bg-background/50 backdrop-blur-sm hover:bg-background/80"
+                className="bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-colors duration-200"
               >
                 {tag}
               </Badge>
@@ -114,7 +114,7 @@ export function GlassBlogCard({
             </div>
 
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <Clock className="h-3 w-3" />
+              <Info className="h-3 w-3" />
               <span>{readTime}</span>
             </div>
           </div>

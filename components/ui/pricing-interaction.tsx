@@ -6,12 +6,12 @@ import React from "react";
 const schools = [
   {
     id: "ensem",
-    name: "Engineering Degree",
+    name: "Digital/Embedded Systems Engineer",
     icon: GraduationCap,
-    school: "ENSEM / Mines Nancy (Télécom Nancy)",
+    school: "ENSEM",
     location: "Nancy, France",
-    date: "2023 – 2026",
-    courses: ["Real-Time Operating Systems", "Software Engineering", "Microprocessor Architecture", "C/Assembly Programming", "Digital and Analog Electronics", "Dependability", "Signal Processing"],
+    date: "2023 - 2026",
+    courses: ["System Control", "Optimization", "Computing", "Electronics", "Real-Time Systems", "Data Analysis", "System Safety"],
   },
   {
     id: "upc",
@@ -19,7 +19,7 @@ const schools = [
     icon: Cpu,
     school: "ETSEIB (UPC)",
     location: "Barcelona, Spain",
-    date: "Sept 2025 – Jan 2026",
+    date: "Sept 2025 - Jan 2026",
     courses: ["Embedded & Real-Time Systems", "Digital Control", "Microcomputers", "Artificial Intelligence Applied to Engineering"],
   },
   {
@@ -28,7 +28,7 @@ const schools = [
     icon: BookOpen,
     school: "Lycée de Troyes",
     location: "Troyes, France",
-    date: "2021 – 2023",
+    date: "2021 - 2023",
     courses: ["Mathematics", "Physics", "Chemistry", "Computer Science", "Engineering Science"],
   },
 ]

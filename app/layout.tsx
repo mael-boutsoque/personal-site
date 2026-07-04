@@ -7,8 +7,8 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const anta = Anta({weight:"400",subsets:['latin'],variable:'--font-anta'});
 
 export const metadata: Metadata = {
-  title: "sitev3",
-  description: "",
+  title: "Maël Boutsoque | Digital Systems Engineer",
+  description: "Digital Systems Engineering student at ENSEM, specializing in embedded systems and hardware design.",
 }
 
 export default function RootLayout({

@@ -1,143 +1,168 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
+import useEmblaCarousel from "embla-carousel-react"
+import AutoScroll from "embla-carousel-auto-scroll"
 import { SectionTitle } from "@/components/ui/section-title"
-import { Component as MorphingCardStack } from "@/components/morphing-card-stack"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card, CardTitle, CardDescription } from "@/components/ui/card"
+import { AnimatedCard } from "@/components/ui/animated-card"
+import { Icon } from "@iconify/react"
 
-const SvgIcon = ({ viewBox, children, title }: { viewBox: string; children: React.ReactNode; title?: string }) => (
-  <svg viewBox={viewBox} className="h-16 w-16 fill-current" xmlns="http://www.w3.org/2000/svg">
-    {title && <title>{title}</title>}
-    {children}
-  </svg>
-)
+interface CardData {
+  id: string
+  title: string
+  description?: string
+  icon?: React.ReactNode
+}
 
-const cards = [
-  {
-    id: "pcb-design",
-    title: "PCB Design",
-    description: "Altium",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="Altium">
-        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.301 0-9.6-4.299-9.6-9.6S6.699 2.4 12 2.4s9.6 4.299 9.6 9.6-4.299 9.6-9.6 9.6zm3.2-14.4h-1.6c-.4 0-.8.4-.8.8v3.2h-2.4V8c0-.4-.4-.8-.8-.8H8c-.4 0-.8.4-.8.8v8c0 .4.4.8.8.8h1.6c.4 0 .8-.4.8-.8v-3.2h2.4V16c0 .4.4.8.8.8h1.6c.4 0 .8-.4.8-.8V8c0-.4-.4-.8-.8-.8z" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "cicd",
-    title: "CI/CD & Project",
-    description: "Git",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="Git">
-        <path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "3d-design",
-    title: "3D Design",
-    description: "Fusion 360",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="Autodesk">
-        <path d="M0 20.202l14.7-9.136h7.625c.235 0 .445.188.445.445 0 .21-.092.305-.21.375l-7.222 4.323c-.47.283-.633.845-.633 1.265l-.008 2.725H24V4.362a.561.561 0 00-.585-.562h-8.752L0 12.893V20.2h.129z" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "work-env",
-    title: "Work Environment",
-    description: "Linux",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="Linux">
-        <path d="M12 0C5.383 0 0 5.383 0 12s5.383 12 12 12 12-5.383 12-12S18.617 0 12 0zm5.637 18.078c-.062.781-.543 1.484-1.269 1.84-.726.356-1.563.43-2.172-.093-.609-.524-.785-1.383-.637-2.164.149-.781.609-1.391 1.336-1.601.727-.211 1.539.04 2.149.563.609.523.871 1.29.593 1.456zm3.23-3.807c-.606.524-1.418.781-2.145.57-.727-.211-1.187-.82-1.336-1.601-.149-.781.027-1.64.636-2.164.61-.523 1.446-.45 2.171-.093.727.356 1.208 1.059 1.27 1.84.062.78-.2 1.547-.596 1.448zM12 4.152c1.406 0 2.578.672 2.578 1.5 0 .828-1.172 2.125-2.578 2.125S9.422 6.48 9.422 5.652c0-.828 1.172-1.5 2.578-1.5zM8.039 7.859c.699-.238 1.457-.062 1.871.399.414.461.504 1.137.301 1.668-.203.531-.688.875-1.387 1.113-.699.239-1.457.063-1.871-.398-.414-.461-.504-1.138-.301-1.669.203-.531.688-.875 1.387-1.113zm7.922 0c.699.238 1.184.582 1.387 1.113.203.531.113 1.208-.301 1.669-.414.461-1.172.637-1.871.398-.699-.238-1.184-.582-1.387-1.113-.203-.531-.113-1.207.301-1.668.414-.461 1.172-.637 1.871-.399z" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "docs",
-    title: "Reports & Documentation",
-    description: "Pack Office / LaTeX + Markdown",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="LaTeX">
-        <path d="M2.176 2.814c.233.42.476.78.73 1.09.247-.013 1.132.456 1.312.523.508.282 1.063.63 1.567.966.505.337.96.662 1.272.9.156.12.278.218.352.286a.483.483 0 01.078.082.08.08 0 01.01.021.06.06 0 01-.004.047.057.057 0 01-.04.03.077.077 0 01-.028 0c-.057 0-.203-.163-.497-.415a23.474 23.474 0 00-2.759-1.827c-.504-.28-.956-.542-1.264-.613a2.322 2.322 0 00-.36-.025 2.706 2.706 0 00-.788.133c.494.414.91.716 1.28.949-.57-.182-1.182-.21-1.902.133.526.329.967.567 1.354.745 1.103.156 2.258.696 3.224 1.309.483.307.904.615 1.219.867.157.125.29.237.39.328.098.091.174.154.197.21.03.073-.019.104-.084.058-.032-.022-.088-.102-.184-.191a7.35 7.35 0 00-.384-.327c-.312-.25-.729-.552-1.209-.857-.893-.562-2.232-1.013-3.173-1.397-.602-.11-1.225-.06-1.906.39.449.2.837.349 1.182.463.812 0 1.892.365 2.935.922 1.042.556 2.04 1.214 2.523 1.774.066.077-.016.126-.074.07-.52-.495-1.463-1.204-2.498-1.756-.639-.337-2.153-1.01-2.886-1.01l.004.002c-.567.02-1.13.195-1.679.716.477.118.885.196 1.244.249-.44.088-.87.3-1.289.722.324.07.616.122.882.162-.328.159-.639.404-.923.78.373.03.703.042 1 .044-.36.166-.696.43-.996.85.533.027.98.025 1.364.003-.422.172-.812.464-1.145.968.662.01 1.188-.022 1.628-.076l-.006.002c.99-.073 2.297.127 2.962.847.052.057-.024.118-.072.074-.648-.58-1.493-.827-2.89-.921h-.002c-.543.149-1.046.446-1.46 1.074.536.008.982-.013 1.366-.05-.469.257-.873.644-1.139 1.306.483-.092.888-.19 1.237-.292-.363.265-.668.636-.873 1.194.324-.072.612-.146.871-.221a2.519 2.519 0 00-.513 1.095c.352-.13.655-.254.926-.377-.257.3-.453.681-.55 1.19.495-.199.899-.388 1.238-.568-.31.333-.543.76-.635 1.356a11.816 11.816 0 001.442-.744c-.433.362-.764.843-.879 1.587.788-.348 1.339-.663 1.767-.955-.184.372-.282.806-.235 1.348.762-.584 1.243-1.056 1.602-1.473-.024.269-.003.56.077.884.546-.939 1.089-1.212 1.65-1.526-.895.451-.762.79-.762 1.184.683-.72 1.635-1.482 1.927-1.96-.39.585-.547 1.14-.65 1.63-1.993 1.054-3.207 1.329-4.568 1.75.528.194 1.093.383.859.652l-.624.622c.399-.124.805-.3 1.158-.059-.035.327-.447.492-.8.683.621-.224.756-.172.92-.12.081.393-.203.603-.388.862 1.565-1.19 3.606-2.13 5.044-2.522 2.022-.681 4.63-1.389 5.339-3.115l.712-2.847-.004.004c-.111-.034-.246-.063-.35-.133a.651.651 0 01-.235-.297c-.252.065-.44.03-.56-.088-.117-.117-.167-.296-.203-.491-.203.041-.362.016-.467-.077-.116-.101-.17-.26-.198-.444l-.008-.039.037-.015a.842.842 0 00.302-.194.257.257 0 00.07-.225l-.006-.037.03-.016c.163-.093.345-.169.428-.28a.274.274 0 00.053-.21.88.88 0 00-.155-.357l-.027-.04.04-.027c.118-.09.244-.179.308-.26.032-.04.048-.076.047-.11 0-.033-.015-.07-.064-.117l-.098-.094.135.006c.213.01.395-.007.538-.053a.504.504 0 00.274-.197c-.006-.033-.02-.063-.02-.098a.484.484 0 01.967 0c0 .044-.015.084-.026.125.177.014.347.01.507-.06l.002.001.035-.013c.236-.085.334.045.72-.456-1.69-2.19-4.157-.635-4.977 1.622-.21.576-1.405.578-1.751 0-1.37-2.95-5.53-6.068-9.07-7.218z" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "data",
-    title: "Data",
-    description: "SQL / AI Model Tuning",
-    icon: (
-      <SvgIcon viewBox="0 0 24 24" title="PostgreSQL">
-        <path d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698z" />
-      </SvgIcon>
-    ),
-  },
-  {
-    id: "c",
-    title: "C",
-    description: "Systems Programming",
-    icon: (
-      <svg viewBox="0 0 128 128" className="h-16 w-16 fill-current">
-        <path d="M117.5 33.5l.3-.2c-.6-1.1-1.5-2.1-2.4-2.6l-48.3-27.8c-.8-.5-1.9-.5-2.7 0L14.6 30.9c-.9.5-1.8 1.6-2.4 2.6l.3.2c.5-.8 1.6-1.5 2.4-1.9l48.3-27.8c.8-.5 1.9-.5 2.7 0l48.3 27.8c.8.5 1.9 1.1 2.4 1.9zm.5 2.1v48.4c0 .9-.5 1.9-1.1 2.4L68.7 110.2c-.6.5-1.5.5-2.1 0l-48.3-27.9c-.6-.5-1.1-1.6-1.1-2.4l-.2-48.4c0-.3.5-1 1.1-1.3l48.2-27.9c.3-.2.7-.3 1.05-.3.35 0 .75.1 1.05.3l48.3 27.8c.6.3 1.1 1 1.1 1.4zm-1.6 48.4l-.1-47.9c0-.6-.3-1.2-.8-1.5L68.6 7.7c-.5-.3-1.3-.3-1.8 0l-47.9 27.6c-.5.3-.8.9-.8 1.5l.1 47.9c0 .6.3 1.2.8 1.5L66 110.1c.5.3 1.3.3 1.8 0l47.9-27.6c.5-.3.8-.9.8-1.5z"/>
-      </svg>
-    ),
-  },
-  {
-    id: "cpp",
-    title: "C++",
-    description: "Performance-critical Code",
-    icon: (
-      <svg viewBox="0 0 128 128" className="h-16 w-16 fill-current">
-        <path d="M117.5 33.5l.3-.2c-.6-1.1-1.5-2.1-2.4-2.6l-48.3-27.8c-.8-.5-1.9-.5-2.7 0L14.6 30.9c-.9.5-1.8 1.6-2.4 2.6l.3.2c.5-.8 1.6-1.5 2.4-1.9l48.3-27.8c.8-.5 1.9-.5 2.7 0l48.3 27.8c.8.5 1.9 1.1 2.4 1.9zm.5 2.1v48.4c0 .9-.5 1.9-1.1 2.4L68.7 110.2c-.6.5-1.5.5-2.1 0l-48.3-27.9c-.6-.5-1.1-1.6-1.1-2.4l-.2-48.4c0-.3.5-1 1.1-1.3l48.2-27.9c.3-.2.7-.3 1.05-.3.35 0 .75.1 1.05.3l48.3 27.8c.6.3 1.1 1 1.1 1.4zm-1.6 48.4l-.1-47.9c0-.6-.3-1.2-.8-1.5L68.6 7.7c-.5-.3-1.3-.3-1.8 0l-47.9 27.6c-.5.3-.8.9-.8 1.5l.1 47.9c0 .6.3 1.2.8 1.5L66 110.1c.5.3 1.3.3 1.8 0l47.9-27.6c.5-.3.8-.9.8-1.5zm-71.3-22.1l12.8-7.4 12.8 7.4v14.8l-12.8 7.4-12.8-7.4v-14.8zm16 4.3l8 4.6v9.2l-8 4.6-8-4.6v-9.2l8-4.6z"/>
-      </svg>
-    ),
-  },
-  {
-    id: "python",
-    title: "Python",
-    description: "Data & Automation",
-    icon: (
-      <svg viewBox="0 0 128 128" className="h-16 w-16 fill-current">
-        <path d="M49.33 62h29.159C80.553 62 81 61.513 81 59.865V50.7c0-1.637-.346-2.35-1.sourced-2.35h-10.322c-.922 0-1.381-.578-1.381-1.579V41.198c0-1.011.336-1.579 1.381-1.579h17.322c1.505 0 2.831.779 2.831 2.462V87.562c0 1.697-.326 2.18-1.578 2.18H51.694c-1.578 0-2.831-.779-2.831-2.18V64.341c0-1.578.253-2.341 1.467-2.341zm-8.997-6.465c-1.579 0-2.631-1.047-2.631-2.626s1.052-2.625 2.631-2.625 2.625 1.047 2.625 2.625-1.046 2.626-2.625 2.626zm16.974-6.465c-1.579 0-2.631-1.047-2.631-2.626s1.052-2.625 2.631-2.625 2.625 1.047 2.625 2.625-1.046 2.626-2.625 2.626zM89.36 87.562c-1.289 0-1.929-.779-1.929-2.18V64.341c0-1.578.336-2.341 1.929-2.341h16.974c1.578 0 2.625.763 2.625 2.341v21.041c0 1.401-.64 2.18-1.929 2.18H89.36z"/>
-      </svg>
-    ),
-  },
-  {
-    id: "java",
-    title: "Java",
-    description: "Enterprise Applications",
-    icon: (
-      <svg viewBox="0 0 128 128" className="h-16 w-16 fill-current">
-        <path d="M47.617 98.12c-3.338 5.849-9.633 6.762-15.468 3.133-5.835-3.629-7.bavaria-10.287-3.632-16.137 3.633-5.85 10.287-6.762 15.468-3.133 5.85 3.628 7.633 10.287 3.632 16.137zm42.703-44.939c-3.632-5.85-10.287-6.762-15.468-3.133-5.85 3.628-7.633 10.287-3.632 16.137 3.338 5.849 9.633 6.762 15.468 3.133 5.85-3.628 7.633-10.287 3.632-16.137zm-18.024-41.248c-3.632 5.85-.974 13.483 5.85 16.137 6.824 2.654 14.458-.974 18.024-6.824s.974-13.483-5.85-16.137c-6.824-2.654-14.458.974-18.024 6.824zm29.844 31.493c-1.974-.789-4.036.131-4.962 1.974-.926 1.843-.131 4.036 1.843 4.962 1.974.789 4.036-.131 4.962-1.974.926-1.843.131-4.036-1.843-4.962z"/>
-      </svg>
-    ),
-  },
-  {
-    id: "matlab",
-    title: "MATLAB",
-    description: "Numerical Computing",
-    icon: (
-      <svg viewBox="0 0 128 128" className="h-16 w-16 fill-current">
-        <path d="M64 0C28.654 0 0 28.654 0 64s28.654 64 64 64 64-28.654 64-64S99.346 0 64 0zm20.5 99.5H43.5v-71h41v71z"/>
-      </svg>
-    ),
-  },
+const tabGroups: Record<string, CardData[]> = {
+  "low-level": [
+    { id: "c", title: "C", description: "Low-level systems programming", icon: <Icon icon="simple-icons:c" className="h-8 w-8" /> },
+    { id: "cpp", title: "C++", description: "Object-oriented / embedded C++", icon: <Icon icon="simple-icons:cplusplus" className="h-8 w-8" /> },
+    { id: "assembly", title: "Assembly", description: "Low-level architecture programming", icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
+    { id: "arduino", title: "Arduino", description: "Embedded prototyping framework", icon: <Icon icon="simple-icons:arduino" className="h-8 w-8" /> },
+    { id: "hal", title: "HAL", description: "Hardware Abstraction Layer (STM32)", icon: <Icon icon="icons8:services" className="h-8 w-8" /> },
+    { id: "bare-metal", title: "Bare Metal", description: "No-OS embedded programming", icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
+    { id: "rtos", title: "FreeRTOS", description: "Real-time operating systems", icon: <Icon icon="icons8:sort" className="h-8 w-8" /> },
+  ],
+  "high-level": [
+    { id: "python", title: "Python", description: "Data analysis / automation / scripting", icon: <Icon icon="simple-icons:python" className="h-8 w-8" /> },
+    { id: "java", title: "Java", description: "Enterprise application development", icon: <Icon icon="devicon:java" className="h-8 w-8" /> },
+    { id: "matlab", title: "MATLAB", description: "Numerical computing / simulation", icon: <Icon icon="devicon:matlab" className="h-8 w-8" /> },
+    { id: "git", title: "Git", description: "Version control / collaboration", icon: <Icon icon="simple-icons:git" className="h-8 w-8" /> },
+    { id: "cicd", title: "CI/CD", description: "Automated pipelines / integration", icon: <Icon icon="icons8:refresh" className="h-8 w-8" /> },
+    { id: "cmake", title: "CMake", description: "Cross-platform build system", icon: <Icon icon="simple-icons:cmake" className="h-8 w-8" /> },
+  ],
+  apps: [
+    { id: "office", title: "MS Office Suite", description: "Word / Excel / PowerPoint", icon: <Icon icon="icons8:word" className="h-8 w-8" /> },
+    { id: "latex", title: "LaTeX", description: "Technical / scientific documentation", icon: <Icon icon="simple-icons:latex" className="h-8 w-8" /> },
+    { id: "vscode", title: "VS Code", description: "Primary code editor", icon: <Icon icon="devicon:vscode" className="h-8 w-8" /> },
+    { id: "eclipse", title: "Eclipse", description: "Java / embedded IDE", icon: <Icon icon="simple-icons:eclipseide" className="h-8 w-8" /> },
+    { id: "stm32-suite", title: "STM32 Suite", description: "CubeMX / CubeIDE / Programmer", icon: <Icon icon="icons8:sensor" className="h-8 w-8" /> },
+  ],
+  pcb: [
+    { id: "altium", title: "Altium", description: "Professional PCB design", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+    { id: "kicad", title: "KiCad", description: "Open-source EDA suite", icon: <Icon icon="simple-icons:kicad" className="h-8 w-8" /> },
+    { id: "fusion-360", title: "Fusion 360", description: "3D CAD / mechanical design", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+    { id: "eurocircuit", title: "Eurocircuit", description: "PCB prototyping / manufacturing", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+  ],
+  data: [
+    { id: "sql", title: "SQL", description: "Relational databases / queries", icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
+    { id: "json", title: "JSON", description: "Data interchange format", icon: <Icon icon="simple-icons:json" className="h-8 w-8" /> },
+    { id: "ai-datasets", title: "AI Datasets", description: "Dataset preparation / curation", icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
+    { id: "ai-training", title: "AI Training", description: "Model training pipelines", icon: <Icon icon="icons8:idea" className="h-8 w-8" /> },
+  ],
+  languages: [
+    { id: "french", title: "French", description: "Native", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+    { id: "english", title: "English", description: "B2+ (920 TOEIC)", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+    { id: "spanish", title: "Spanish", description: "Intermediate (B)", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+  ],
+}
+
+const tabMeta = [
+  { value: "low-level", label: "Low Level" },
+  { value: "high-level", label: "High Level" },
+  { value: "apps", label: "Apps" },
+  { value: "pcb", label: "PCB" },
+  { value: "data", label: "Data" },
+  { value: "languages", label: "Languages" },
 ]
 
+const TAB_VALUES = tabMeta.map((t) => t.value)
+
 export function Skills() {
+  const [activeTab, setActiveTab] = useState("low-level")
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { align: "start", containScroll: "trimSnaps", duration: 30 },
+    [AutoScroll({ speed: 0.5, stopOnInteraction: true, stopOnMouseEnter: true })]
+  )
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return
+    const index = emblaApi.selectedScrollSnap()
+    const value = TAB_VALUES[index]
+    if (value) setActiveTab(value)
+  }, [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+    emblaApi.on("select", onSelect)
+    emblaApi.on("reInit", onSelect)
+  }, [emblaApi, onSelect])
+
+  const handleTabChange = useCallback(
+    (value: string) => {
+      if (!emblaApi) return
+      const index = TAB_VALUES.indexOf(value)
+      emblaApi.scrollTo(index)
+      setActiveTab(value)
+    },
+    [emblaApi]
+  )
+
+  useEffect(() => {
+    if (!emblaApi) return
+    const el = emblaApi.rootNode() as HTMLElement
+    if (!el) return
+
+    const onWheel = (e: WheelEvent) => {
+      const rect = el.getBoundingClientRect()
+      const inView = rect.top < window.innerHeight && rect.bottom > 0
+      if (!inView) return
+
+      e.preventDefault()
+
+      if (e.deltaY > 0) {
+        emblaApi.scrollNext()
+      } else if (e.deltaY < 0) {
+        emblaApi.scrollPrev()
+      }
+    }
+
+    el.addEventListener("wheel", onWheel, { passive: false })
+    return () => el.removeEventListener("wheel", onWheel)
+  }, [emblaApi])
+
   return (
     <section id="skills" className="w-full px-4 md:px-6 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
         <SectionTitle id="03" title="Skills" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-        >
-          <MorphingCardStack cards={cards} defaultLayout="list" />
-        </motion.div>
+        <Tabs value={activeTab} onValueChange={handleTabChange}>
+          <div className="flex justify-center">
+            <TabsList className="mb-8 flex-wrap h-auto">
+              {tabMeta.map((tab) => (
+                <TabsTrigger key={tab.value} value={tab.value}>
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+        </Tabs>
+
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex">
+            {tabMeta.map((tab) => (
+              <div key={tab.value} className="min-w-0 shrink-0 grow-0 basis-full">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pr-4">
+                  {tabGroups[tab.value].map((card, i) => (
+                    <AnimatedCard key={card.id} index={i}>
+                      <Card size="sm" className="flex items-center gap-4 p-4">
+                        {card.icon && <div className="shrink-0">{card.icon}</div>}
+                        <div className="min-w-0">
+                          <CardTitle className="mb-0.5">{card.title}</CardTitle>
+                          {card.description && <CardDescription>{card.description}</CardDescription>}
+                        </div>
+                      </Card>
+                    </AnimatedCard>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )

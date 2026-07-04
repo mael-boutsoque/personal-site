@@ -10,9 +10,9 @@ const Dithering = lazy(() =>
 )
 
 const words = [
-  { text: "hardware", color: "text-primary" },
-  { text: "embbeded systems", color: "text-muted-foreground" },
-  { text: "software", color: "text-secondary" },
+  { text: "digital systems", color: "text-primary" },
+  { text: "embedded systems", color: "text-muted-foreground" },
+  { text: "hardware", color: "text-secondary" },
 ]
 
 const chars = "0123456789"
@@ -72,7 +72,7 @@ export function CTASection() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative overflow-hidden rounded-[48px] bg-card shadow-[0_2px_12px_rgba(0,0,0,0.04)] min-h-[90vh] flex flex-col items-center justify-center duration-500">
+        <div className="relative overflow-hidden rounded-[48px] bg-card shadow-[0_2px_12px_rgba(0,0,0,0.04)] min-h-[90vh] flex flex-col items-center justify-center">
           <Suspense fallback={<Skeleton className="absolute inset-0 rounded-[48px]" />}>
             <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-multiply">
               <Dithering
@@ -93,7 +93,7 @@ export function CTASection() {
               animate="visible"
               className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-foreground leading-[1.05] font-anta whitespace-nowrap"
             >
-              {"Hi I'm mael".split("").map((char, i) =>
+              {"Hi I'm Maël".split("").map((char, i) =>
                 char === " " ? (
                   <span key={i} className="inline-block w-[0.3em]">&nbsp;</span>
                 ) : (

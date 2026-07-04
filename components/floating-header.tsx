@@ -11,11 +11,25 @@ const links = [
   { label: 'Education', href: '#education' },
   { label: 'Projects', href: '#projects' },
   { label: 'Skills', href: '#skills' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 function scrollTo(id: string) {
   const el = document.getElementById(id.replace('#', ''));
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  if (!el) return;
+  const target = el.getBoundingClientRect().top + window.scrollY;
+  const start = window.scrollY;
+  const diff = target - start;
+  const duration = 600;
+  let startTime: number | null = null;
+  function step(time: number) {
+    if (startTime === null) startTime = time;
+    const t = Math.min((time - startTime) / duration, 1);
+    const ease = 1 - (1 - t) ** 3;
+    window.scrollTo(0, start + diff * ease);
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 export function FloatingHeader() {
@@ -31,7 +45,7 @@ export function FloatingHeader() {
     >
       <nav className="mx-auto flex items-center justify-between px-1.5 py-0.5 max-w-6xl">
         <div
-          className="hover:bg-accent flex cursor-pointer items-center gap-1 rounded-md px-1 py-0.5 duration-100"
+          className="hover:bg-accent flex cursor-pointer items-center gap-1 rounded-md px-1 py-0.5 transition-colors duration-100"
           onClick={() => scrollTo('#hero')}
         >
           <Terminal className="size-4" />
