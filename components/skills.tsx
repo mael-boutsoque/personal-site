@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import useEmblaCarousel from "embla-carousel-react"
 import AutoScroll from "embla-carousel-auto-scroll"
 import { SectionTitle } from "@/components/ui/section-title"
@@ -102,6 +102,9 @@ export function Skills() {
     [emblaApi]
   )
 
+  const wheelAccumulator = useRef(0)
+  const SCROLL_THRESHOLD = 150
+
   useEffect(() => {
     if (!emblaApi) return
     const el = emblaApi.rootNode() as HTMLElement
@@ -112,11 +115,21 @@ export function Skills() {
       const inView = rect.top < window.innerHeight && rect.bottom > 0
       if (!inView) return
 
+      const atStart = !emblaApi.canScrollPrev()
+      const atEnd = !emblaApi.canScrollNext()
+
+      if (e.deltaY > 0 && atEnd) return
+      if (e.deltaY < 0 && atStart) return
+
       e.preventDefault()
 
-      if (e.deltaY > 0) {
+      wheelAccumulator.current += e.deltaY
+
+      if (wheelAccumulator.current >= SCROLL_THRESHOLD) {
+        wheelAccumulator.current = 0
         emblaApi.scrollNext()
-      } else if (e.deltaY < 0) {
+      } else if (wheelAccumulator.current <= -SCROLL_THRESHOLD) {
+        wheelAccumulator.current = 0
         emblaApi.scrollPrev()
       }
     }
