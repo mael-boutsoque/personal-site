@@ -9,6 +9,7 @@ const anta = Anta({weight:"400",subsets:['latin'],variable:'--font-anta'});
 export const metadata: Metadata = {
   title: "Maël Boutsoque | Digital Systems Engineer",
   description: "Digital Systems Engineering student at ENSEM, specializing in embedded systems and hardware design.",
+  icons: "/logo_no_bg.svg",
 }
 
 export default function RootLayout({
@@ -18,7 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable, anta.variable)}>
-      <body>{children}</body>
+      <body>
+        {children}
+      </body>
     </html>
   )
 }

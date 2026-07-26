@@ -73,11 +73,24 @@ const TAB_VALUES = tabMeta.map((t) => t.value)
 
 export function Skills() {
   const [activeTab, setActiveTab] = useState("low-level")
+  const sectionRef = useRef<HTMLElement>(null)
+  const [inView, setInView] = useState(false)
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { align: "start", containScroll: "trimSnaps", duration: 30 },
-    [AutoScroll({ speed: 0.5, stopOnInteraction: true, stopOnMouseEnter: true })]
+    [AutoScroll({ speed: 0.5, stopOnInteraction: true, stopOnMouseEnter: true, active: inView })]
   )
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.3 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return
@@ -139,7 +152,7 @@ export function Skills() {
   }, [emblaApi])
 
   return (
-    <section id="skills" className="w-full px-4 md:px-6 py-24 md:py-32">
+    <section id="skills" ref={sectionRef} className="w-full px-4 md:px-6 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
         <SectionTitle id="03" title="Skills" />
 

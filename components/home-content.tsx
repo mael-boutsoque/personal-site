@@ -1,0 +1,175 @@
+"use client"
+
+import { useEffect, useRef } from "react"
+import { Mail } from "lucide-react"
+import { FloatingHeader } from "@/components/floating-header"
+import { CTASection } from "@/components/hero-dithering-card"
+import { Skills } from "@/components/skills"
+import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui"
+import { SectionTitle } from "@/components/ui/section-title"
+import { ContactBento } from "@/components/contact-bento"
+import { Footer } from "@/components/ui/footer"
+import { AnimatedSection } from "@/components/ui/animated-section"
+import { AnimatedCard } from "@/components/ui/animated-card"
+import { ExperienceAccordion, type CardItem } from "@/components/experience-accordion"
+
+const schools: CardItem[] = [
+  {
+    id: "ensem",
+    name: "Digital/Embedded Systems Engineer",
+    logo: "/schools/ensem.webp",
+    school: "ENSEM",
+    url: "https://ensem.univ-lorraine.fr",
+    location: "Nancy, France",
+    date: "2023 - 2026",
+    courses: ["System Control", "Optimization", "Computing", "Electronics", "Real-Time Systems", "Data Analysis", "System Safety"],
+  },
+  {
+    id: "upc",
+    name: "Exchange Program",
+    logo: "/schools/etseib.webp",
+    school: "ETSEIB (UPC)",
+    url: "https://etseib.upc.edu",
+    location: "Barcelona, Spain",
+    date: "Sept 2025 - Jan 2026",
+    courses: ["Embedded & Real-Time Systems", "Digital Control", "Microcomputers", "Artificial Intelligence Applied to Engineering"],
+  },
+  {
+    id: "cpge",
+    name: "CPGE PC",
+    logo: "/schools/prepa-troyes.webp",
+    school: "Lycée de Troyes",
+    url: "https://www.lyceechrestiendetroyes.fr",
+    location: "Troyes, France",
+    date: "2021 - 2023",
+    courses: ["Mathematics", "Physics", "Chemistry", "Computer Science", "Engineering Science"],
+  },
+]
+
+const experiences: CardItem[] = [
+  {
+    id: "quandela",
+    name: "Internship - Software & Hardware Designer",
+    logo: "/experiences/quandela.webp",
+    school: "Quandela",
+    url: "https://www.quandela.com",
+    location: "Massy, France",
+    date: "2025",
+    courses: ["Communication Protocol Migration","Hardware Design", "PCB Testing", "Integration"],
+  },
+]
+
+export default function HomeContent() {
+  useEffect(() => {
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) window.location.reload()
+    }
+    const nav = performance.getEntriesByType?.("navigation")?.[0] as PerformanceNavigationTiming | undefined
+    if (nav?.type === "back_forward") {
+      window.location.reload()
+    }
+    window.addEventListener("pageshow", onPageShow)
+    return () => window.removeEventListener("pageshow", onPageShow)
+  }, [])
+
+  return (
+    <>
+      <FloatingHeader />
+      <CTASection />
+      <section id="education" className="w-full px-4 md:px-6 py-24 md:py-32">
+        <AnimatedSection className="max-w-6xl mx-auto">
+          <SectionTitle id="01" title="Education" />
+          <ExperienceAccordion items={schools} />
+        </AnimatedSection>
+      </section>
+      <section id="experience" className="w-full px-4 md:px-6 py-24 md:py-32">
+        <AnimatedSection className="max-w-6xl mx-auto">
+          <SectionTitle id="02" title="Experience" />
+          <ExperienceAccordion items={experiences} hoverTitle="Missions" />
+        </AnimatedSection>
+      </section>
+      <section id="projects" className="w-full px-4 md:px-6 py-24 md:py-32">
+        <AnimatedSection className="max-w-6xl mx-auto">
+          <SectionTitle id="03" title="Projects" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <AnimatedCard index={0}>
+              <GlassBlogCard
+                title="Communication Protocol Migration"
+                excerpt="Migrated 2 proprietary protocols: QDL (RS485, AVR to STM32) using standard C libraries, and QDL Fast (Ethernet, Linux to STM32) using HAL and FreeRTOS."
+                image="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&q=80"
+                url="/projects/communication-protocol-migration"
+                tags={["Embedded", "Protocols"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={1}>
+              <GlassBlogCard
+                title="Multifunction Hub PCB Design"
+                excerpt="Designed a PCB board in Altium integrating Ethernet Hub, RS485 Hub, I2C modules, USB flash, multi-function relays, and servo motors."
+                image="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+                url="/projects/multifunction-hub-pcb-design"
+                tags={["Hardware", "PCB"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={2}>
+              <GlassBlogCard
+                title="ENSEM Eco Marathon"
+                excerpt="Design and manufacture of a test bench to measure vehicle performance for a race organized by Shell. Secondary car driver."
+                image="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"
+                url="/projects/ensem-eco-marathon"
+                tags={["Automotive", "Testing"]}
+              />
+            </AnimatedCard>
+            <AnimatedCard index={3}>
+              <GlassBlogCard
+                title="Autonomous Robot"
+                excerpt="Controlled an autonomous geolocation robot capable of navigating optimally to a list of coordinates using Python and TCP protocols."
+                image="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
+                url="/projects/autonomous-robot"
+                tags={["Robotics", "Autonomous"]}
+              />
+            </AnimatedCard>
+          </div>
+        </AnimatedSection>
+      </section>
+      <Skills />
+      <section id="contact" className="w-full px-4 md:px-6 py-24 md:py-32">
+        <AnimatedSection className="max-w-6xl mx-auto">
+          <SectionTitle id="04" title="Contact" />
+          <ContactBento />
+        </AnimatedSection>
+      </section>
+      <Footer
+        logo={
+          <svg viewBox="0 0 900 900" className="h-6 w-6" fill="currentColor">
+            <g transform="translate(0,900) scale(0.1,-0.1)">
+              <path d="M3020 6065 c-191 -36 -334 -97 -482 -207 -234 -174 -393 -430 -443 -715 -23 -132 -23 -1475 0 -1530 52 -123 182 -182 316 -141 53 16 113 69 141 126 l23 47 5 720 c5 717 5 720 28 788 31 92 113 210 194 277 121 102 252 150 408 150 227 0 413 -104 541 -303 53 -82 79 -171 89 -297 8 -117 25 -163 82 -217 45 -44 96 -63 168 -63 131 0 219 77 249 218 6 29 11 71 11 94 0 106 66 257 155 356 229 253 604 284 870 72 109 -86 180 -198 216 -338 18 -71 19 -116 19 -762 0 -575 2 -694 15 -736 39 -132 179 -203 319 -162 55 16 138 99 154 154 9 31 12 222 12 746 0 763 -2 796 -55 955 -62 183 -141 310 -279 449 -134 134 -251 209 -414 268 -417 149 -881 43 -1193 -275 l-75 -77 -66 68 c-139 145 -317 253 -503 306 -151 44 -365 56 -505 29z" />
+              <path d="M4862 5194 c-160 -80 -187 -285 -54 -406 120 -109 313 -72 386 74 49 99 31 204 -49 283 -80 80 -184 98 -283 49z" />
+              <path d="M3099 5170 c-20 -11 -51 -33 -68 -51 -53 -53 -66 -86 -66 -174 0 -89 12 -121 67 -175 63 -63 163 -86 259 -60 47 13 114 72 141 124 30 57 30 165 0 222 -24 47 -81 100 -128 120 -49 21 -161 17 -205 -6z" />
+              <path d="M2200 3208 c-37 -22 -64 -49 -85 -82 -27 -44 -30 -58 -30 -131 0 -73 3 -87 30 -131 101 -163 352 -150 436 23 27 56 30 149 7 204 -41 95 -126 149 -236 149 -59 0 -75 -4 -122 -32z" />
+              <path d="M5764 3226 c-46 -20 -102 -74 -126 -120 -30 -57 -30 -165 0 -222 27 -52 94 -111 141 -124 96 -26 196 -3 259 60 55 54 67 86 67 175 0 88 -13 121 -66 174 -51 52 -99 71 -176 71 -37 -1 -82 -7 -99 -14z" />
+            </g>
+          </svg>
+        }
+        brandName="Mael"
+        socialLinks={[
+          { icon: <Mail className="h-4 w-4" />, href: "mailto:mael.boutsoque@gmail.com", label: "Email" },
+          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>, href: "https://github.com/mael-boutsoque", label: "GitHub" },
+          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>, href: "https://linkedin.com/in/mael-boutsoque", label: "LinkedIn" },
+        ]}
+        mainLinks={[
+          { href: "#hero", label: "Home" },
+          { href: "#education", label: "Education" },
+          { href: "#experience", label: "Experience" },
+          { href: "#projects", label: "Projects" },
+          { href: "#skills", label: "Skills" },
+          { href: "#contact", label: "Contact" },
+        ]}
+        legalLinks={[
+          { href: "#", label: "Privacy" },
+          { href: "#", label: "Terms" },
+        ]}
+        copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. All rights reserved.` }}
+      />
+    </>
+  )
+}
