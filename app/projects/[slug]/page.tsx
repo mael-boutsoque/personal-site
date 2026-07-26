@@ -32,11 +32,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4">
-      <h1 className="text-3xl font-bold">{project.title}</h1>
-      <p className="mt-4 text-muted-foreground max-w-xl text-center">
-        {project.excerpt}
-      </p>
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 gap-6">
+      <div className="flex items-center gap-2 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-3 text-sm text-amber-600 dark:text-amber-400">
+        <svg className="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>This project page is under development.</span>
+      </div>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">{project.title}</h1>
+        <p className="mt-4 text-muted-foreground max-w-xl">
+          {project.excerpt}
+        </p>
+      </div>
     </main>
   )
 }

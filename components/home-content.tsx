@@ -7,7 +7,7 @@ import { CTASection } from "@/components/hero-dithering-card"
 import { Skills } from "@/components/skills"
 import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui"
 import { SectionTitle } from "@/components/ui/section-title"
-import { ContactBento } from "@/components/contact-bento"
+
 import { Footer } from "@/components/ui/footer"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedCard } from "@/components/ui/animated-card"
@@ -96,7 +96,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title="Communication Protocol Migration"
                 excerpt="Migrated 2 proprietary protocols: QDL (RS485, AVR to STM32) using standard C libraries, and QDL Fast (Ethernet, Linux to STM32) using HAL and FreeRTOS."
-                image="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?w=800&q=80"
+                image="/projects/communication-protocol-migration/main.png"
                 url="/projects/communication-protocol-migration"
                 tags={["Embedded", "Protocols"]}
               />
@@ -105,7 +105,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title="Multifunction Hub PCB Design"
                 excerpt="Designed a PCB board in Altium integrating Ethernet Hub, RS485 Hub, I2C modules, USB flash, multi-function relays, and servo motors."
-                image="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80"
+                image="/projects/board-design/main.png"
                 url="/projects/multifunction-hub-pcb-design"
                 tags={["Hardware", "PCB"]}
               />
@@ -114,7 +114,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title="ENSEM Eco Marathon"
                 excerpt="Design and manufacture of a test bench to measure vehicle performance for a race organized by Shell. Secondary car driver."
-                image="https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=800&q=80"
+                image="/projects/eco-marathon/main.webp"
                 url="/projects/ensem-eco-marathon"
                 tags={["Automotive", "Testing"]}
               />
@@ -123,7 +123,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title="Autonomous Robot"
                 excerpt="Controlled an autonomous geolocation robot capable of navigating optimally to a list of coordinates using Python and TCP protocols."
-                image="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80"
+                image="/projects/autonomous-car/main.png"
                 url="/projects/autonomous-robot"
                 tags={["Robotics", "Autonomous"]}
               />
@@ -132,12 +132,6 @@ export default function HomeContent() {
         </AnimatedSection>
       </section>
       <Skills />
-      <section id="contact" className="w-full px-4 md:px-6 py-24 md:py-32">
-        <AnimatedSection className="max-w-6xl mx-auto">
-          <SectionTitle id="04" title="Contact" />
-          <ContactBento />
-        </AnimatedSection>
-      </section>
       <Footer
         logo={
           <svg viewBox="0 0 900 900" className="h-6 w-6" fill="currentColor">
@@ -162,7 +156,6 @@ export default function HomeContent() {
           { href: "#experience", label: "Experience" },
           { href: "#projects", label: "Projects" },
           { href: "#skills", label: "Skills" },
-          { href: "#contact", label: "Contact" },
         ]}
         legalLinks={[
           { href: "#", label: "Privacy" },

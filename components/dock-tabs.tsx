@@ -31,10 +31,10 @@ function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: Motio
     return val - bounds.x - bounds.width / 2
   })
 
-  const widthSync = useTransform(distance, [-150, 0, 150], [36, 52, 36])
+  const widthSync = useTransform(distance, [-150, 0, 150], [48, 68, 48])
   const width = useSpring(widthSync, { mass: 0.1, stiffness: 150, damping: 12 })
 
-  const heightSync = useTransform(distance, [-150, 0, 150], [36, 52, 36])
+  const heightSync = useTransform(distance, [-150, 0, 150], [48, 68, 48])
   const height = useSpring(heightSync, { mass: 0.1, stiffness: 150, damping: 12 })
 
   const [isHovered, setIsHovered] = useState(false)
@@ -63,7 +63,7 @@ function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: Motio
         }}
       >
         <motion.div
-          className="text-base"
+          className="text-xl"
           animate={{
             scale: isHovered ? 1.1 : 1,
           }}
@@ -129,15 +129,15 @@ export function DockTabs() {
     ...item,
     action: () => {
       if (item.id === "copy-mail") {
-        navigator.clipboard.writeText("mael@example.com")
+        navigator.clipboard.writeText("mael.boutsoque@gmail.com")
         setCopiedId("copy-mail")
         setTimeout(() => setCopiedId(null), 2000)
       } else if (item.id === "download-cv") {
-        window.open("/cv.pdf", "_blank")
+        window.open("/CV_EN_complet.pdf", "_blank")
       } else if (item.id === "github") {
-        window.open("https://github.com/mael", "_blank")
+        window.open("https://github.com/mael-boutsoque", "_blank")
       } else if (item.id === "linkedin") {
-        window.open("https://linkedin.com/in/mael", "_blank")
+        window.open("https://linkedin.com/in/mael-boutsoque", "_blank")
       }
     },
   }))
@@ -146,7 +146,7 @@ export function DockTabs() {
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className="mx-auto flex h-16 items-end gap-2 rounded-2xl px-3 pb-2"
+      className="mx-auto flex h-20 items-end gap-3 rounded-2xl px-4 pb-3"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{

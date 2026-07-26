@@ -1,17 +1,38 @@
 "use client"
 
 import React from 'react';
-import { MenuIcon, House, BookOpen, Code2, Wrench, Mail } from 'lucide-react';
+import { MenuIcon, House, BookOpen, Code2, Wrench, Mail, Copy, ExternalLink, FileDown } from 'lucide-react';
 import { Button } from '@heroui/react';
 import { Sheet, SheetContent } from '@/components/sheet';
 import { cn } from '@/lib/utils';
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+} from '@/components/ui/navigation-menu';
 
 const links = [
   { label: 'Home', href: '#hero', icon: House },
   { label: 'Education', href: '#education', icon: BookOpen },
   { label: 'Projects', href: '#projects', icon: Code2 },
   { label: 'Skills', href: '#skills', icon: Wrench },
-  { label: 'Contact', href: '#contact', icon: Mail },
+];
+
+interface ContactItem {
+  label: string
+  icon: React.ElementType
+  href?: string
+  action?: () => void
+}
+
+const contactItems: ContactItem[] = [
+  { label: 'Email', icon: Copy, href: 'mailto:mael.boutsoque@gmail.com' },
+  { label: 'GitHub', icon: ExternalLink, href: 'https://github.com/mael-boutsoque' },
+  { label: 'LinkedIn', icon: ExternalLink, href: 'https://linkedin.com/in/mael-boutsoque' },
+  { label: 'Download CV', icon: FileDown, href: '/CV_EN_complet.pdf' },
 ];
 
 function scrollTo(id: string) {
@@ -56,12 +77,7 @@ export function FloatingHeader() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 z-50',
-        'w-full',
-      )}
-    >
+    <header className="fixed top-0 left-0 z-50 w-full">
       <nav className="mx-auto flex items-center justify-center px-4 py-2 max-w-7xl">
         <div
           className="absolute left-4 flex cursor-pointer items-center justify-center size-11 rounded-full bg-background transition-opacity hover:opacity-80"
@@ -77,21 +93,56 @@ export function FloatingHeader() {
             </g>
           </svg>
         </div>
-        <div className="hidden lg:flex items-center gap-6 rounded-full bg-background px-4 py-1.5">
-          {links.map((link) => (
-            <button
-              key={link.href}
-              onClick={() => scrollTo(link.href)}
-              className={cn(
-                "inline-flex items-center gap-1.5 text-sm font-light tracking-wide transition-opacity hover:opacity-60",
-                active === link.href ? "opacity-100" : "opacity-40"
-              )}
-            >
-              <link.icon className="size-4" />
-              {link.label}
-            </button>
-          ))}
+
+        <div className="hidden lg:flex items-center rounded-full bg-background px-2 py-1">
+          <NavigationMenu>
+            <NavigationMenuList>
+              {links.map((link) => (
+                <NavigationMenuItem key={link.href}>
+                  <NavigationMenuLink
+                    href={link.href}
+                    onClick={(e) => { e.preventDefault(); scrollTo(link.href); }}
+                    className={cn(
+                      'inline-flex items-center gap-1.5 text-sm font-light tracking-wide',
+                      active === link.href ? 'opacity-100' : 'opacity-40',
+                    )}
+                  >
+                    <link.icon className="size-4" />
+                    {link.label}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              ))}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="inline-flex items-center gap-1.5 text-sm font-light tracking-wide opacity-40 data-open:opacity-100">
+                  <Mail className="size-4" />
+                  Contact
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="min-w-40">
+                  {contactItems.map((item) => (
+                    <NavigationMenuLink
+                      key={item.label}
+                      href={item.href ?? '#'}
+                      onClick={(e) => {
+                        if (item.action) {
+                          e.preventDefault()
+                          item.action()
+                        } else if (item.href && !item.href.startsWith('http') && !item.href.startsWith('/') && !item.href.startsWith('mailto:')) {
+                          e.preventDefault()
+                        }
+                      }}
+                      target={item.href?.startsWith('http') || item.href?.startsWith('/') ? '_blank' : undefined}
+                      rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    >
+                      <item.icon className="size-4" />
+                      {item.label}
+                    </NavigationMenuLink>
+                  ))}
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
+
         <div className="absolute right-4 flex items-center gap-2 lg:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <Button
@@ -117,6 +168,25 @@ export function FloatingHeader() {
                   >
                     <link.icon className="mr-2 size-4" />
                     {link.label}
+                  </a>
+                ))}
+                {contactItems.map((item) => (
+                  <a
+                    key={item.label}
+                    className="inline-flex items-center justify-start whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium hover:bg-accent transition-colors"
+                    href={item.href ?? '#'}
+                    onClick={(e) => {
+                      if (item.action) {
+                        e.preventDefault()
+                        item.action()
+                      }
+                      setOpen(false)
+                    }}
+                    target={item.href?.startsWith('http') || item.href?.startsWith('/') ? '_blank' : undefined}
+                    rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  >
+                    <item.icon className="mr-2 size-4" />
+                    {item.label}
                   </a>
                 ))}
               </div>
