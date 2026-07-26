@@ -23,6 +23,15 @@
   },
   "registries": {
     "@aceternity": "https://ui.aceternity.com/registry/{name}.json",
-    "@animate-ui": "https://animate-ui.com/r/{name}.json"
+    "@animate-ui": "https://animate-ui.com/r/{name}.json",
+    "@ss-components": {
+      "url": "https://shadcnstudio.com/r/components/{name}.json",
+      "params": {
+        "email": "${EMAIL}",
+        "license_key": "${LICENSE_KEY}"
+      }
+    },
+    "@shadcn-studio": "https://shadcnstudio.com/r/{name}.json",
+    "@reui": "https://reui.io/r/{style}/{name}.json"
   }
 }

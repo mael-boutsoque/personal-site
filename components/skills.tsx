@@ -1,13 +1,20 @@
 "use client"
 
-import { useState, useEffect, useCallback, useRef } from "react"
-import useEmblaCarousel from "embla-carousel-react"
-import AutoScroll from "embla-carousel-auto-scroll"
+import { useRef, useState, useEffect } from "react"
 import { SectionTitle } from "@/components/ui/section-title"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardTitle, CardDescription } from "@/components/ui/card"
 import { AnimatedCard } from "@/components/ui/animated-card"
 import { Icon } from "@iconify/react"
+import {
+  Stepper,
+  StepperIndicator,
+  StepperItem,
+  StepperNav,
+  StepperSeparator,
+  StepperTitle,
+  StepperTrigger,
+} from "@/components/reui/stepper"
+import { CheckIcon } from "lucide-react"
 
 interface CardData {
   id: string
@@ -60,126 +67,90 @@ const tabGroups: Record<string, CardData[]> = {
   ],
 }
 
-const tabMeta = [
-  { value: "low-level", label: "Low Level" },
-  { value: "high-level", label: "High Level" },
-  { value: "apps", label: "Apps" },
-  { value: "pcb", label: "PCB" },
-  { value: "data", label: "Data" },
-  { value: "languages", label: "Languages" },
+const categories = [
+  { key: "low-level", label: "Low Level" },
+  { key: "high-level", label: "High Level" },
+  { key: "apps", label: "Apps" },
+  { key: "pcb", label: "PCB" },
+  { key: "data", label: "Data" },
+  { key: "languages", label: "Languages" },
 ]
 
-const TAB_VALUES = tabMeta.map((t) => t.value)
-
 export function Skills() {
-  const [activeTab, setActiveTab] = useState("low-level")
-  const sectionRef = useRef<HTMLElement>(null)
-  const [inView, setInView] = useState(false)
-
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { align: "start", containScroll: "trimSnaps", duration: 30 },
-    [AutoScroll({ speed: 0.5, stopOnInteraction: true, stopOnMouseEnter: true, active: inView })]
-  )
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const el = sectionRef.current
-    if (!el) return
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.3 }
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [])
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    const index = emblaApi.selectedScrollSnap()
-    const value = TAB_VALUES[index]
-    if (value) setActiveTab(value)
-  }, [emblaApi])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    emblaApi.on("select", onSelect)
-    emblaApi.on("reInit", onSelect)
-  }, [emblaApi, onSelect])
-
-  const handleTabChange = useCallback(
-    (value: string) => {
-      if (!emblaApi) return
-      const index = TAB_VALUES.indexOf(value)
-      emblaApi.scrollTo(index)
-      setActiveTab(value)
-    },
-    [emblaApi]
-  )
-
-  const wheelAccumulator = useRef(0)
-  const SCROLL_THRESHOLD = 150
-
-  useEffect(() => {
-    if (!emblaApi) return
-    const el = emblaApi.rootNode() as HTMLElement
-    if (!el) return
-
-    const onWheel = (e: WheelEvent) => {
-      const rect = el.getBoundingClientRect()
-      const inView = rect.top < window.innerHeight && rect.bottom > 0
-      if (!inView) return
-
-      const atStart = !emblaApi.canScrollPrev()
-      const atEnd = !emblaApi.canScrollNext()
-
-      if (e.deltaY > 0 && atEnd) return
-      if (e.deltaY < 0 && atStart) return
-
-      e.preventDefault()
-
-      wheelAccumulator.current += e.deltaY
-
-      if (wheelAccumulator.current >= SCROLL_THRESHOLD) {
-        wheelAccumulator.current = 0
-        emblaApi.scrollNext()
-      } else if (wheelAccumulator.current <= -SCROLL_THRESHOLD) {
-        wheelAccumulator.current = 0
-        emblaApi.scrollPrev()
-      }
+    const handler = () => {
+      const scrolled = -wrapper.getBoundingClientRect().top
+      const vh = window.innerHeight
+      const total = categories.length * vh
+      const clamped = Math.min(Math.max(scrolled, 0), total - vh)
+      setActiveIndex(Math.round(clamped / vh))
+      setVisible(scrolled >= 0 && scrolled <= total - vh)
     }
 
-    el.addEventListener("wheel", onWheel, { passive: false })
-    return () => el.removeEventListener("wheel", onWheel)
-  }, [emblaApi])
+    handler()
+    window.addEventListener("scroll", handler, { passive: true })
+    return () => window.removeEventListener("scroll", handler)
+  }, [])
 
   return (
-    <section id="skills" ref={sectionRef} className="w-full px-4 md:px-6 py-24 md:py-32">
+    <section id="skills" className="w-full px-4 md:px-6 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
         <SectionTitle id="03" title="Skills" />
 
-        <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <div className="flex justify-center">
-            <TabsList className="mb-8 flex-wrap h-auto">
-              {tabMeta.map((tab) => (
-                <TabsTrigger key={tab.value} value={tab.value}>
-                  {tab.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+        <div ref={wrapperRef} className="relative" style={{ height: `${categories.length * 100}vh` }}>
+          {/* REUI Stepper progress indicator */}
+          <div
+            className={`fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-50 pointer-events-none transition-opacity duration-500 ${
+              visible ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Stepper
+              value={activeIndex + 1}
+              orientation="vertical"
+              indicators={{ completed: <CheckIcon className="size-3.5" /> }}
+            >
+              <StepperNav className="items-start">
+                {categories.map((cat, ci) => (
+                  <StepperItem key={cat.key} step={ci + 1} className="relative items-start not-last:flex-1">
+                    <StepperTrigger className="items-start gap-2.5 pb-12 last:pb-0">
+                      <StepperIndicator className="data-[state=completed]:bg-foreground data-[state=completed]:text-background data-[state=active]:bg-foreground data-[state=active]:text-background">
+                        {ci + 1}
+                      </StepperIndicator>
+                      <div className="mt-0.5 text-left">
+                        <StepperTitle>{cat.label}</StepperTitle>
+                      </div>
+                    </StepperTrigger>
+                    {ci < categories.length - 1 && (
+                      <StepperSeparator className="group-data-[state=completed]/step:bg-foreground absolute inset-y-0 top-7 left-3 -order-1 m-0 -translate-x-1/2 group-data-[orientation=vertical]/stepper-nav:h-[calc(100%-2rem)]" />
+                    )}
+                  </StepperItem>
+                ))}
+              </StepperNav>
+            </Stepper>
           </div>
-        </Tabs>
 
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex">
-            {tabMeta.map((tab) => (
-              <div key={tab.value} className="min-w-0 shrink-0 grow-0 basis-full">
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pr-4">
-                  {tabGroups[tab.value].map((card, i) => (
+          {/* Sticky cards */}
+          <div>
+            {categories.map((cat, ci) => (
+              <div
+                key={cat.key}
+                className={`sticky top-0 h-screen flex flex-col justify-center p-6 md:p-10 bg-card ${ci === 0 ? "rounded-2xl" : "rounded-t-2xl"}`}
+              >
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                  {tabGroups[cat.key].map((card, i) => (
                     <AnimatedCard key={card.id} index={i}>
-                      <Card size="sm" className="flex items-center gap-4 p-4">
+                      <Card size="sm" className="flex items-center gap-3 p-3 h-full">
                         {card.icon && <div className="shrink-0">{card.icon}</div>}
                         <div className="min-w-0">
-                          <CardTitle className="mb-0.5">{card.title}</CardTitle>
-                          {card.description && <CardDescription>{card.description}</CardDescription>}
+                          <CardTitle className="mb-0.5 text-sm">{card.title}</CardTitle>
+                          {card.description && <CardDescription className="text-xs">{card.description}</CardDescription>}
                         </div>
                       </Card>
                     </AnimatedCard>
