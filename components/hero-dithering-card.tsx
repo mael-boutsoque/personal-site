@@ -36,14 +36,17 @@ export function CTASection() {
           </Suspense>
 
           <div className="relative z-10 px-8 md:px-16 mx-auto w-full flex flex-col items-center text-center">
-            <TextRotate
-              texts={["Hardware", "Software", "Embedded"]}
-              mainClassName="text-[clamp(3.5rem,12vw,12rem)] font-black tracking-tight leading-[1.05] font-anta text-primary items-center justify-center"
-              rotationInterval={2500}
-              splitBy="characters"
-              staggerDuration={0.02}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            />
+            <h1 className="text-[clamp(3.5rem,12vw,12rem)] font-black tracking-tight leading-[1.05] font-anta text-primary flex items-center justify-center">
+              <span className="sr-only">Hardware Software Embedded Engineer</span>
+              <TextRotate
+                texts={["Hardware", "Software", "Embedded"]}
+                mainClassName="items-center justify-center"
+                rotationInterval={2500}
+                splitBy="characters"
+                staggerDuration={0.02}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              />
+            </h1>
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}

@@ -9,8 +9,11 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const anta = Anta({weight:"400",subsets:['latin'],variable:'--font-anta'});
 
 export const metadata: Metadata = {
-  title: "Maël Boutsoque | Digital Systems Engineer",
-  description: "Digital Systems Engineering student at ENSEM, specializing in embedded systems and hardware design.",
+  title: {
+    default: "Maël Boutsoque | Digital Systems Engineer",
+    template: "%s | Maël Boutsoque",
+  },
+  description: "Embedded systems and hardware design portfolio by Maël Boutsoque, a Digital Systems Engineering student at ENSEM specializing in low-level programming and PCB design.",
   icons: "/logo_no_bg.svg",
   verification: {
     google: "iFESq7sLykQuc0qIR7hGkxuawUwmytxw4fAH5DPPzl0",
