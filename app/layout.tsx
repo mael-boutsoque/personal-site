@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "Maël Boutsoque | Digital Systems Engineer",
   description: "Digital Systems Engineering student at ENSEM, specializing in embedded systems and hardware design.",
   icons: "/logo_no_bg.svg",
+  verification: {
+    google: "iFESq7sLykQuc0qIR7hGkxuawUwmytxw4fAH5DPPzl0",
+  },
 }
 
 export default function RootLayout({
