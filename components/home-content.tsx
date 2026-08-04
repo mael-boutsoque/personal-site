@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react"
 import { Mail } from "lucide-react"
-import { FloatingHeader } from "@/components/floating-header"
 import { CTASection } from "@/components/hero-dithering-card"
 import { Skills } from "@/components/skills"
 import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui"
@@ -74,7 +73,6 @@ export default function HomeContent() {
 
   return (
     <>
-      <FloatingHeader />
       <CTASection />
       <section id="education" className="w-full px-4 md:px-6 py-24 md:py-32">
         <AnimatedSection className="max-w-6xl mx-auto">
@@ -158,8 +156,7 @@ export default function HomeContent() {
           { href: "#skills", label: "Skills" },
         ]}
         legalLinks={[
-          { href: "#", label: "Privacy" },
-          { href: "#", label: "Terms" },
+          { href: "/legal-notice", label: "Legal Notice" },
         ]}
         copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. All rights reserved.` }}
       />

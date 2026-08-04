@@ -35,7 +35,15 @@ const contactItems: ContactItem[] = [
   { label: 'Download CV', icon: FileDown, href: '/CV_EN_complet.pdf' },
 ];
 
+function isHomePage() {
+  return window.location.pathname === '/' || window.location.pathname === '';
+}
+
 function scrollTo(id: string) {
+  if (!isHomePage()) {
+    window.location.assign('/' + id);
+    return;
+  }
   const el = document.getElementById(id.replace('#', ''));
   if (!el) return;
   const target = el.getBoundingClientRect().top + window.scrollY;
@@ -56,6 +64,13 @@ function scrollTo(id: string) {
 export function FloatingHeader() {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState('#hero');
+
+  React.useEffect(() => {
+    const id = window.location.hash;
+    if (id && id !== '#hero') {
+      setTimeout(() => scrollTo(id), 200);
+    }
+  }, []);
 
   React.useEffect(() => {
     const ids = links.map(l => l.href.replace('#', ''));
