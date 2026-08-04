@@ -36,6 +36,14 @@ export function CTASection() {
           </Suspense>
 
           <div className="relative z-10 px-8 md:px-16 mx-auto w-full flex flex-col items-center text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-sm md:text-lg font-medium uppercase tracking-[0.35em] text-muted-foreground"
+            >
+              Mael Boutsoque
+            </motion.div>
             <h1 className="text-[clamp(3.5rem,12vw,12rem)] font-black tracking-tight leading-[1.05] font-anta text-primary flex items-center justify-center">
               <span className="sr-only">Hardware Software Embedded Engineer</span>
               <TextRotate
