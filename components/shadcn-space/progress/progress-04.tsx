@@ -17,12 +17,14 @@ interface ShimmerProgressProps {
   speed?: "slow" | "medium" | "fast";
   className?: string;
   onComplete?: () => void;
+  duration?: number;
 }
 
 export default function ShimmerProgress({
   speed = "medium",
   className,
   onComplete,
+  duration,
 }: ShimmerProgressProps) {
   const [progress, setProgress] = useState(0);
   const [messageIndex, setMessageIndex] = useState(0);
@@ -31,6 +33,29 @@ export default function ShimmerProgress({
   useEffect(() => {
     if (isCompleted) onComplete?.();
   }, [isCompleted, onComplete]);
+
+  // Deterministic timer: reach 100% in a fixed duration (ms), overriding the
+  // random speed-based filling so the bar stays synchronized.
+  useEffect(() => {
+    if (isCompleted || !duration) return;
+
+    let raf: number;
+    const start = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - start;
+      const next = Math.min((elapsed / duration) * 100, 100);
+      setProgress(next);
+      if (next < 100) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        setIsCompleted(true);
+      }
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [isCompleted, duration]);
 
   // Speed Configuration Mapping
   const config = useMemo(
@@ -44,7 +69,7 @@ export default function ShimmerProgress({
   );
 
   useEffect(() => {
-    if (isCompleted) return;
+    if (isCompleted || duration) return;
 
     let timer: NodeJS.Timeout;
 

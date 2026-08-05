@@ -64,7 +64,7 @@ export function LoadingScreen() {
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           <ShimmerProgress
-            speed="fast"
+            duration={1500}
             onComplete={handleComplete}
             className="border-none shadow-none"
           />
