@@ -63,11 +63,18 @@ export function LoadingScreen() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          <ShimmerProgress
-            duration={1500}
-            onComplete={handleComplete}
-            className="border-none shadow-none"
-          />
+          <div className="flex flex-col items-center gap-10">
+            <img
+              src="/logo_no_bg.svg"
+              alt="Maël Boutsoque"
+              className="size-28 object-contain drop-shadow-lg dark:invert"
+            />
+            <ShimmerProgress
+              duration={1500}
+              onComplete={handleComplete}
+              className="border-none shadow-none"
+            />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
