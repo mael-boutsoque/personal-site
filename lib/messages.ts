@@ -56,3 +56,9 @@ export const messages = {
 } as const
 
 export type MessageKey = typeof messages.en
+
+export type NestedKeyOf<T> = {
+  [K in keyof T]: T[K] extends object
+    ? `${K & string}.${NestedKeyOf<T[K]>}`
+    : K & string
+}[keyof T]

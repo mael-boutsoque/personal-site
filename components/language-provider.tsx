@@ -1,21 +1,18 @@
 "use client"
 
 import * as React from "react"
-import {
-  DirectionProvider,
-  type TextDirection,
-} from "@/components/ui/direction"
-import { messages, type Language, type MessageKey } from "@/lib/messages"
+import { DirectionProvider } from "@/components/ui/direction"
+import { messages, type Language, type NestedKeyOf } from "@/lib/messages"
 
 interface LanguageContextValue {
   lang: Language
   setLang: (lang: Language) => void
-  t: (key: keyof MessageKey) => string
+  t: (key: NestedKeyOf<typeof messages.en>) => string
 }
 
 const LanguageContext = React.createContext<LanguageContextValue | null>(null)
 
-const directionMap: Record<Language, TextDirection> = {
+const directionMap: Record<Language, "ltr" | "rtl"> = {
   en: "ltr",
   fr: "ltr",
 }
@@ -34,7 +31,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const t = React.useCallback(
-    (key: keyof MessageKey) => messages[lang][key],
+    (key: NestedKeyOf<typeof messages.en>) =>
+      key.split(".").reduce<unknown>(
+        (acc, part) => (acc as Record<string, unknown>)[part],
+        messages[lang]
+      ) as string,
     [lang]
   )
 

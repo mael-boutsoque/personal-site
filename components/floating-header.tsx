@@ -172,7 +172,7 @@ export function FloatingHeader() {
             <Languages className="size-3.5 lg:hidden" />
             <span className="hidden lg:inline">{lang.toUpperCase()}</span>
           </Button>
-          <Sheet open={open} onOpenChange={setOpen} className="lg:hidden">
+          <Sheet open={open} onOpenChange={setOpen}>
             <Button
               className="lg:hidden"
               variant="ghost"
