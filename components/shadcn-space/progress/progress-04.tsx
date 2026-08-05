@@ -16,15 +16,21 @@ const messages = [
 interface ShimmerProgressProps {
   speed?: "slow" | "medium" | "fast";
   className?: string;
+  onComplete?: () => void;
 }
 
 export default function ShimmerProgress({
   speed = "medium",
   className,
+  onComplete,
 }: ShimmerProgressProps) {
   const [progress, setProgress] = useState(0);
   const [messageIndex, setMessageIndex] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    if (isCompleted) onComplete?.();
+  }, [isCompleted, onComplete]);
 
   // Speed Configuration Mapping
   const config = useMemo(

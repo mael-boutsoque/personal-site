@@ -1,54 +1,57 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ShimmerProgress from "@/components/shadcn-space/progress/progress-04";
 
-const MIN_DISPLAY_MS = 2400;
+const MIN_DISPLAY_MS = 2200;
 const SESSION_KEY = "site:v3:loaded";
 
 export function LoadingScreen() {
   const [done, setDone] = useState(false);
+  const [barDone, setBarDone] = useState(false);
+
+  const handleComplete = useCallback(() => setBarDone(true), []);
 
   useEffect(() => {
-    const alreadyShown = () => {
-      try {
-        return window.sessionStorage.getItem(SESSION_KEY) === "1";
-      } catch {
-        return false;
-      }
-    };
-
-    if (alreadyShown()) {
-      setDone(true);
-      return;
-    }
-
-    let faded = false;
-    const start = performance.now();
-    const finish = () => {
-      if (faded) return;
-      faded = true;
-      const elapsed = performance.now() - start;
-      const wait = Math.max(0, MIN_DISPLAY_MS - elapsed);
-      setTimeout(() => {
+    try {
+      if (window.sessionStorage.getItem(SESSION_KEY) === "1") {
+        setBarDone(true);
         setDone(true);
-        try {
-          window.sessionStorage.setItem(SESSION_KEY, "1");
-        } catch {
-          /* ignore */
-        }
-      }, wait);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  // Fade out once the progress bar reaches 100% AND the window has loaded
+  // AND a minimum display time has elapsed.
+  useEffect(() => {
+    if (!barDone) return;
+
+    let windowLoaded = document.readyState === "complete";
+    let minElapsed = false;
+
+    const hide = () => {
+      if (windowLoaded && minElapsed) setDone(true);
     };
 
-    if (document.readyState === "complete") {
-      finish();
-    } else {
-      window.addEventListener("load", finish, { once: true });
-    }
+    const onLoad = () => {
+      windowLoaded = true;
+      hide();
+    };
 
-    return () => window.removeEventListener("load", finish);
-  }, []);
+    if (!windowLoaded) window.addEventListener("load", onLoad);
+    const minTimer = setTimeout(() => {
+      minElapsed = true;
+      hide();
+    }, MIN_DISPLAY_MS);
+
+    return () => {
+      window.removeEventListener("load", onLoad);
+      clearTimeout(minTimer);
+    };
+  }, [barDone]);
 
   return (
     <AnimatePresence>
@@ -60,7 +63,11 @@ export function LoadingScreen() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          <ShimmerProgress speed="medium" className="border-none shadow-none" />
+          <ShimmerProgress
+            speed="fast"
+            onComplete={handleComplete}
+            className="border-none shadow-none"
+          />
         </motion.div>
       )}
     </AnimatePresence>
