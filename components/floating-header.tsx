@@ -1,8 +1,9 @@
 "use client"
 
 import React from 'react';
-import { MenuIcon, House, BookOpen, Code2, Wrench, Mail, Copy, ExternalLink, FileDown, Languages } from 'lucide-react';
+import { MenuIcon, House, BookOpen, Code2, Wrench, Mail, Copy, ExternalLink, FileDown } from 'lucide-react';
 import { useLanguage } from '@/components/language-provider';
+import { LanguageCombobox } from '@/components/language-combobox';
 import { Button } from '@heroui/react';
 import { Sheet, SheetContent } from '@/components/sheet';
 import { cn } from '@/lib/utils';
@@ -49,7 +50,7 @@ function scrollTo(id: string) {
 }
 
 export function FloatingHeader() {
-  const { lang, setLang, t } = useLanguage();
+  const { t } = useLanguage();
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState('#hero');
 
@@ -161,17 +162,7 @@ export function FloatingHeader() {
         </div>
 
         <div className="absolute right-4 flex items-center gap-2">
-          <Button
-            variant="ghost"
-            isIconOnly
-            size="sm"
-            aria-label="Change language"
-            onPress={() => setLang(lang === 'en' ? 'fr' : 'en')}
-            className="text-sm font-medium"
-          >
-            <Languages className="size-3.5 lg:hidden" />
-            <span className="hidden lg:inline">{lang.toUpperCase()}</span>
-          </Button>
+          <LanguageCombobox />
           <Sheet open={open} onOpenChange={setOpen}>
             <Button
               className="lg:hidden"
