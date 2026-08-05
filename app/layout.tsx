@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { LenisProvider } from "@/components/lenis-provider";
 import { FloatingHeader } from "@/components/floating-header";
 import { LanguageProvider } from "@/components/language-provider";
+import { LoadingScreen } from "@/components/loading-screen";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const anta = Anta({weight:"400",subsets:['latin'],variable:'--font-anta'});
@@ -29,6 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable, anta.variable)}>
       <body>
+        <LoadingScreen />
         <LanguageProvider>
           <LenisProvider>
             <FloatingHeader />
