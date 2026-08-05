@@ -1,7 +1,8 @@
 "use client"
 
 import React from 'react';
-import { MenuIcon, House, BookOpen, Code2, Wrench, Mail, Copy, ExternalLink, FileDown } from 'lucide-react';
+import { MenuIcon, House, BookOpen, Code2, Wrench, Mail, Copy, ExternalLink, FileDown, Languages } from 'lucide-react';
+import { useLanguage } from '@/components/language-provider';
 import { Button } from '@heroui/react';
 import { Sheet, SheetContent } from '@/components/sheet';
 import { cn } from '@/lib/utils';
@@ -14,26 +15,12 @@ import {
   NavigationMenuContent,
 } from '@/components/ui/navigation-menu';
 
-const links = [
-  { label: 'Home', href: '#hero', icon: House },
-  { label: 'Education', href: '#education', icon: BookOpen },
-  { label: 'Projects', href: '#projects', icon: Code2 },
-  { label: 'Skills', href: '#skills', icon: Wrench },
-];
-
 interface ContactItem {
   label: string
   icon: React.ElementType
   href?: string
   action?: () => void
 }
-
-const contactItems: ContactItem[] = [
-  { label: 'Email', icon: Copy, href: 'mailto:mael.boutsoque@gmail.com' },
-  { label: 'GitHub', icon: ExternalLink, href: 'https://github.com/mael-boutsoque' },
-  { label: 'LinkedIn', icon: ExternalLink, href: 'https://linkedin.com/in/mael-boutsoque' },
-  { label: 'Download CV', icon: FileDown, href: '/CV_EN_complet.pdf' },
-];
 
 function isHomePage() {
   return window.location.pathname === '/' || window.location.pathname === '';
@@ -62,8 +49,23 @@ function scrollTo(id: string) {
 }
 
 export function FloatingHeader() {
+  const { lang, setLang, t } = useLanguage();
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState('#hero');
+
+  const links = [
+    { label: t('nav.home'), href: '#hero', icon: House },
+    { label: t('nav.education'), href: '#education', icon: BookOpen },
+    { label: t('nav.projects'), href: '#projects', icon: Code2 },
+    { label: t('nav.skills'), href: '#skills', icon: Wrench },
+  ];
+
+  const contactItems: ContactItem[] = [
+    { label: t('nav.email'), icon: Copy, href: 'mailto:mael.boutsoque@gmail.com' },
+    { label: t('nav.github'), icon: ExternalLink, href: 'https://github.com/mael-boutsoque' },
+    { label: t('nav.linkedin'), icon: ExternalLink, href: 'https://linkedin.com/in/mael-boutsoque' },
+    { label: t('nav.downloadCv'), icon: FileDown, href: '/CV_EN_complet.pdf' },
+  ];
 
   React.useEffect(() => {
     const id = window.location.hash;
@@ -130,7 +132,7 @@ export function FloatingHeader() {
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="inline-flex items-center gap-1.5 text-sm font-light tracking-wide opacity-40 data-open:opacity-100">
                   <Mail className="size-4" />
-                  Contact
+                  {t('nav.contact')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="min-w-40">
                   {contactItems.map((item) => (
@@ -158,9 +160,21 @@ export function FloatingHeader() {
           </NavigationMenu>
         </div>
 
-        <div className="absolute right-4 flex items-center gap-2 lg:hidden">
-          <Sheet open={open} onOpenChange={setOpen}>
+        <div className="absolute right-4 flex items-center gap-2">
+          <Button
+            variant="ghost"
+            isIconOnly
+            size="sm"
+            aria-label="Change language"
+            onPress={() => setLang(lang === 'en' ? 'fr' : 'en')}
+            className="text-sm font-medium"
+          >
+            <Languages className="size-3.5 lg:hidden" />
+            <span className="hidden lg:inline">{lang.toUpperCase()}</span>
+          </Button>
+          <Sheet open={open} onOpenChange={setOpen} className="lg:hidden">
             <Button
+              className="lg:hidden"
               variant="ghost"
               isIconOnly
               size="sm"

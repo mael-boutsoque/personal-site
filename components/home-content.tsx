@@ -11,6 +11,7 @@ import { Footer } from "@/components/ui/footer"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedCard } from "@/components/ui/animated-card"
 import { ExperienceAccordion, type CardItem } from "@/components/experience-accordion"
+import { useLanguage } from "@/components/language-provider"
 
 const schools: CardItem[] = [
   {
@@ -59,6 +60,7 @@ const experiences: CardItem[] = [
 ]
 
 export default function HomeContent() {
+  const { t } = useLanguage()
   useEffect(() => {
     const onPageShow = (e: PageTransitionEvent) => {
       if (e.persisted) window.location.reload()
@@ -76,19 +78,19 @@ export default function HomeContent() {
       <CTASection />
       <section id="education" className="w-full px-4 md:px-6 py-24 md:py-32">
         <AnimatedSection className="max-w-6xl mx-auto">
-          <SectionTitle id="01" title="Education" />
+          <SectionTitle id="01" title={t("nav.education")} />
           <ExperienceAccordion items={schools} />
         </AnimatedSection>
       </section>
       <section id="experience" className="w-full px-4 md:px-6 py-24 md:py-32">
         <AnimatedSection className="max-w-6xl mx-auto">
-          <SectionTitle id="02" title="Experience" />
-          <ExperienceAccordion items={experiences} hoverTitle="Missions" />
+          <SectionTitle id="02" title={t("home.experience")} />
+          <ExperienceAccordion items={experiences} hoverTitle={t("home.hoverTitle")} />
         </AnimatedSection>
       </section>
       <section id="projects" className="w-full px-4 md:px-6 py-24 md:py-32">
         <AnimatedSection className="max-w-6xl mx-auto">
-          <SectionTitle id="03" title="Projects" />
+          <SectionTitle id="03" title={t("nav.projects")} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedCard index={0}>
               <GlassBlogCard
@@ -149,16 +151,16 @@ export default function HomeContent() {
           { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>, href: "https://linkedin.com/in/mael-boutsoque", label: "LinkedIn" },
         ]}
         mainLinks={[
-          { href: "#hero", label: "Home" },
-          { href: "#education", label: "Education" },
-          { href: "#experience", label: "Experience" },
-          { href: "#projects", label: "Projects" },
-          { href: "#skills", label: "Skills" },
+          { href: "#hero", label: t("nav.home") },
+          { href: "#education", label: t("nav.education") },
+          { href: "#experience", label: t("home.experience") },
+          { href: "#projects", label: t("nav.projects") },
+          { href: "#skills", label: t("nav.skills") },
         ]}
         legalLinks={[
-          { href: "/legal-notice", label: "Legal Notice" },
+          { href: "/legal-notice", label: t("home.legalNotice") },
         ]}
-        copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. All rights reserved.` }}
+        copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. ${t("home.rights")}` }}
       />
     </>
   )
