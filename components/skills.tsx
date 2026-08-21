@@ -15,6 +15,7 @@ import {
   StepperTrigger,
 } from "@/components/reui/stepper"
 import { CheckIcon } from "lucide-react"
+import { useLanguage } from "@/components/language-provider"
 
 interface CardData {
   id: string
@@ -23,63 +24,64 @@ interface CardData {
   icon?: React.ReactNode
 }
 
-const tabGroups: Record<string, CardData[]> = {
-  "low-level": [
-    { id: "c", title: "C", description: "Low-level systems programming", icon: <Icon icon="simple-icons:c" className="h-8 w-8" /> },
-    { id: "cpp", title: "C++", description: "Object-oriented / embedded C++", icon: <Icon icon="simple-icons:cplusplus" className="h-8 w-8" /> },
-    { id: "assembly", title: "Assembly", description: "Low-level architecture programming", icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
-    { id: "arduino", title: "Arduino", description: "Embedded prototyping framework", icon: <Icon icon="simple-icons:arduino" className="h-8 w-8" /> },
-    { id: "hal", title: "HAL", description: "Hardware Abstraction Layer (STM32)", icon: <Icon icon="icons8:services" className="h-8 w-8" /> },
-    { id: "bare-metal", title: "Bare Metal", description: "No-OS embedded programming", icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
-    { id: "rtos", title: "FreeRTOS", description: "Real-time operating systems", icon: <Icon icon="icons8:sort" className="h-8 w-8" /> },
-  ],
-  "high-level": [
-    { id: "python", title: "Python", description: "Data analysis / automation / scripting", icon: <Icon icon="simple-icons:python" className="h-8 w-8" /> },
-    { id: "java", title: "Java", description: "Enterprise application development", icon: <Icon icon="devicon:java" className="h-8 w-8" /> },
-    { id: "matlab", title: "MATLAB", description: "Numerical computing / simulation", icon: <Icon icon="devicon:matlab" className="h-8 w-8" /> },
-    { id: "git", title: "Git", description: "Version control / collaboration", icon: <Icon icon="simple-icons:git" className="h-8 w-8" /> },
-    { id: "cicd", title: "CI/CD", description: "Automated pipelines / integration", icon: <Icon icon="icons8:refresh" className="h-8 w-8" /> },
-    { id: "cmake", title: "CMake", description: "Cross-platform build system", icon: <Icon icon="simple-icons:cmake" className="h-8 w-8" /> },
-  ],
-  apps: [
-    { id: "office", title: "MS Office Suite", description: "Word / Excel / PowerPoint", icon: <Icon icon="icons8:word" className="h-8 w-8" /> },
-    { id: "latex", title: "LaTeX", description: "Technical / scientific documentation", icon: <Icon icon="simple-icons:latex" className="h-8 w-8" /> },
-    { id: "vscode", title: "VS Code", description: "Primary code editor", icon: <Icon icon="devicon:vscode" className="h-8 w-8" /> },
-    { id: "eclipse", title: "Eclipse", description: "Java / embedded IDE", icon: <Icon icon="simple-icons:eclipseide" className="h-8 w-8" /> },
-    { id: "stm32-suite", title: "STM32 Suite", description: "CubeMX / CubeIDE / Programmer", icon: <Icon icon="icons8:sensor" className="h-8 w-8" /> },
-  ],
-  pcb: [
-    { id: "altium", title: "Altium", description: "Professional PCB design", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
-    { id: "kicad", title: "KiCad", description: "Open-source EDA suite", icon: <Icon icon="simple-icons:kicad" className="h-8 w-8" /> },
-    { id: "fusion-360", title: "Fusion 360", description: "3D CAD / mechanical design", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
-    { id: "eurocircuit", title: "Eurocircuit", description: "PCB prototyping / manufacturing", icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
-  ],
-  data: [
-    { id: "sql", title: "SQL", description: "Relational databases / queries", icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
-    { id: "json", title: "JSON", description: "Data interchange format", icon: <Icon icon="simple-icons:json" className="h-8 w-8" /> },
-    { id: "ai-datasets", title: "AI Datasets", description: "Dataset preparation / curation", icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
-    { id: "ai-training", title: "AI Training", description: "Model training pipelines", icon: <Icon icon="icons8:idea" className="h-8 w-8" /> },
-  ],
-  languages: [
-    { id: "french", title: "French", description: "Native", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
-    { id: "english", title: "English", description: "B2+ (920 TOEIC)", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
-    { id: "spanish", title: "Spanish", description: "Intermediate (B)", icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
-  ],
-}
-
-const categories = [
-  { key: "low-level", label: "Low Level" },
-  { key: "high-level", label: "High Level" },
-  { key: "apps", label: "Apps" },
-  { key: "pcb", label: "PCB" },
-  { key: "data", label: "Data" },
-  { key: "languages", label: "Languages" },
-]
-
 export function Skills() {
+  const { t } = useLanguage()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
   const [visible, setVisible] = useState(false)
+
+  const categories = [
+    { key: "low-level", label: t("skills.categories.low-level") },
+    { key: "high-level", label: t("skills.categories.high-level") },
+    { key: "apps", label: t("skills.categories.apps") },
+    { key: "pcb", label: t("skills.categories.pcb") },
+    { key: "data", label: t("skills.categories.data") },
+    { key: "languages", label: t("skills.categories.languages") },
+  ]
+
+  const tabGroups: Record<string, CardData[]> = {
+    "low-level": [
+      { id: "c", title: t("skills.lowLevel.c.title"), description: t("skills.lowLevel.c.description"), icon: <Icon icon="simple-icons:c" className="h-8 w-8" /> },
+      { id: "cpp", title: t("skills.lowLevel.cpp.title"), description: t("skills.lowLevel.cpp.description"), icon: <Icon icon="simple-icons:cplusplus" className="h-8 w-8" /> },
+      { id: "assembly", title: t("skills.lowLevel.assembly.title"), description: t("skills.lowLevel.assembly.description"), icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
+      { id: "arduino", title: t("skills.lowLevel.arduino.title"), description: t("skills.lowLevel.arduino.description"), icon: <Icon icon="simple-icons:arduino" className="h-8 w-8" /> },
+      { id: "hal", title: t("skills.lowLevel.hal.title"), description: t("skills.lowLevel.hal.description"), icon: <Icon icon="icons8:services" className="h-8 w-8" /> },
+      { id: "bare-metal", title: t("skills.lowLevel.bareMetal.title"), description: t("skills.lowLevel.bareMetal.description"), icon: <Icon icon="icons8:settings" className="h-8 w-8" /> },
+      { id: "rtos", title: t("skills.lowLevel.rtos.title"), description: t("skills.lowLevel.rtos.description"), icon: <Icon icon="icons8:sort" className="h-8 w-8" /> },
+    ],
+    "high-level": [
+      { id: "python", title: t("skills.highLevel.python.title"), description: t("skills.highLevel.python.description"), icon: <Icon icon="simple-icons:python" className="h-8 w-8" /> },
+      { id: "java", title: t("skills.highLevel.java.title"), description: t("skills.highLevel.java.description"), icon: <Icon icon="devicon:java" className="h-8 w-8" /> },
+      { id: "matlab", title: t("skills.highLevel.matlab.title"), description: t("skills.highLevel.matlab.description"), icon: <Icon icon="devicon:matlab" className="h-8 w-8" /> },
+      { id: "git", title: t("skills.highLevel.git.title"), description: t("skills.highLevel.git.description"), icon: <Icon icon="simple-icons:git" className="h-8 w-8" /> },
+      { id: "cicd", title: t("skills.highLevel.cicd.title"), description: t("skills.highLevel.cicd.description"), icon: <Icon icon="icons8:refresh" className="h-8 w-8" /> },
+      { id: "cmake", title: t("skills.highLevel.cmake.title"), description: t("skills.highLevel.cmake.description"), icon: <Icon icon="simple-icons:cmake" className="h-8 w-8" /> },
+    ],
+    apps: [
+      { id: "office", title: t("skills.apps.office.title"), description: t("skills.apps.office.description"), icon: <Icon icon="icons8:word" className="h-8 w-8" /> },
+      { id: "latex", title: t("skills.apps.latex.title"), description: t("skills.apps.latex.description"), icon: <Icon icon="simple-icons:latex" className="h-8 w-8" /> },
+      { id: "vscode", title: t("skills.apps.vscode.title"), description: t("skills.apps.vscode.description"), icon: <Icon icon="devicon:vscode" className="h-8 w-8" /> },
+      { id: "eclipse", title: t("skills.apps.eclipse.title"), description: t("skills.apps.eclipse.description"), icon: <Icon icon="simple-icons:eclipseide" className="h-8 w-8" /> },
+      { id: "stm32-suite", title: t("skills.apps.stm32Suite.title"), description: t("skills.apps.stm32Suite.description"), icon: <Icon icon="icons8:sensor" className="h-8 w-8" /> },
+    ],
+    pcb: [
+      { id: "altium", title: t("skills.pcb.altium.title"), description: t("skills.pcb.altium.description"), icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+      { id: "kicad", title: t("skills.pcb.kicad.title"), description: t("skills.pcb.kicad.description"), icon: <Icon icon="simple-icons:kicad" className="h-8 w-8" /> },
+      { id: "fusion-360", title: t("skills.pcb.fusion360.title"), description: t("skills.pcb.fusion360.description"), icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+      { id: "eurocircuit", title: t("skills.pcb.eurocircuit.title"), description: t("skills.pcb.eurocircuit.description"), icon: <Icon icon="icons8:puzzle" className="h-8 w-8" /> },
+    ],
+    data: [
+      { id: "sql", title: t("skills.data.sql.title"), description: t("skills.data.sql.description"), icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
+      { id: "json", title: t("skills.data.json.title"), description: t("skills.data.json.description"), icon: <Icon icon="simple-icons:json" className="h-8 w-8" /> },
+      { id: "ai-datasets", title: t("skills.data.aiDatasets.title"), description: t("skills.data.aiDatasets.description"), icon: <Icon icon="icons8:database" className="h-8 w-8" /> },
+      { id: "ai-training", title: t("skills.data.aiTraining.title"), description: t("skills.data.aiTraining.description"), icon: <Icon icon="icons8:idea" className="h-8 w-8" /> },
+    ],
+    languages: [
+      { id: "french", title: t("skills.languages.french.title"), description: t("skills.languages.french.description"), icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+      { id: "english", title: t("skills.languages.english.title"), description: t("skills.languages.english.description"), icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+      { id: "spanish", title: t("skills.languages.spanish.title"), description: t("skills.languages.spanish.description"), icon: <Icon icon="icons8:student" className="h-8 w-8" /> },
+    ],
+  }
 
   useEffect(() => {
     const wrapper = wrapperRef.current
@@ -102,7 +104,7 @@ export function Skills() {
   return (
     <section id="skills" className="w-full px-4 md:px-6 py-24 md:py-32">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle id="03" title="Skills" />
+        <SectionTitle id="03" title={t("nav.skills")} />
 
         <div ref={wrapperRef} className="relative" style={{ height: `${categories.length * 100}vh` }}>
           {/* REUI Stepper progress indicator */}

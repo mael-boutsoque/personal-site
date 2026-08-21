@@ -6,61 +6,85 @@ import { CTASection } from "@/components/hero-dithering-card"
 import { Skills } from "@/components/skills"
 import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui"
 import { SectionTitle } from "@/components/ui/section-title"
-
 import { Footer } from "@/components/ui/footer"
 import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedCard } from "@/components/ui/animated-card"
 import { ExperienceAccordion, type CardItem } from "@/components/experience-accordion"
 import { useLanguage } from "@/components/language-provider"
 
-const schools: CardItem[] = [
-  {
-    id: "ensem",
-    name: "Digital/Embedded Systems Engineer",
-    logo: "/schools/ensem.webp",
-    school: "ENSEM",
-    url: "https://ensem.univ-lorraine.fr",
-    location: "Nancy, France",
-    date: "2023 - 2026",
-    courses: ["System Control", "Optimization", "Computing", "Electronics", "Real-Time Systems", "Data Analysis", "System Safety"],
-  },
-  {
-    id: "upc",
-    name: "Exchange Program",
-    logo: "/schools/etseib.webp",
-    school: "ETSEIB (UPC)",
-    url: "https://etseib.upc.edu",
-    location: "Barcelona, Spain",
-    date: "Sept 2025 - Jan 2026",
-    courses: ["Embedded & Real-Time Systems", "Digital Control", "Microcomputers", "Artificial Intelligence Applied to Engineering"],
-  },
-  {
-    id: "cpge",
-    name: "CPGE PC",
-    logo: "/schools/prepa-troyes.webp",
-    school: "Lycée de Troyes",
-    url: "https://www.lyceechrestiendetroyes.fr",
-    location: "Troyes, France",
-    date: "2021 - 2023",
-    courses: ["Mathematics", "Physics", "Chemistry", "Computer Science", "Engineering Science"],
-  },
-]
-
-const experiences: CardItem[] = [
-  {
-    id: "quandela",
-    name: "Internship - Software & Hardware Designer",
-    logo: "/experiences/quandela.webp",
-    school: "Quandela",
-    url: "https://www.quandela.com",
-    location: "Massy, France",
-    date: "2025",
-    courses: ["Communication Protocol Migration","Hardware Design", "PCB Testing", "Integration"],
-  },
-]
-
 export default function HomeContent() {
   const { t } = useLanguage()
+
+  const schools: CardItem[] = [
+    {
+      id: "ensem",
+      name: t("education.schools.ensem.name"),
+      logo: "/schools/ensem.webp",
+      school: t("education.schools.ensem.school"),
+      url: "https://ensem.univ-lorraine.fr",
+      location: t("education.schools.ensem.location"),
+      date: t("education.schools.ensem.date"),
+      courses: [
+        t("education.schools.ensem.courses.0"),
+        t("education.schools.ensem.courses.1"),
+        t("education.schools.ensem.courses.2"),
+        t("education.schools.ensem.courses.3"),
+        t("education.schools.ensem.courses.4"),
+        t("education.schools.ensem.courses.5"),
+        t("education.schools.ensem.courses.6"),
+      ],
+    },
+    {
+      id: "upc",
+      name: t("education.schools.upc.name"),
+      logo: "/schools/etseib.webp",
+      school: t("education.schools.upc.school"),
+      url: "https://etseib.upc.edu",
+      location: t("education.schools.upc.location"),
+      date: t("education.schools.upc.date"),
+      courses: [
+        t("education.schools.upc.courses.0"),
+        t("education.schools.upc.courses.1"),
+        t("education.schools.upc.courses.2"),
+        t("education.schools.upc.courses.3"),
+      ],
+    },
+    {
+      id: "cpge",
+      name: t("education.schools.cpge.name"),
+      logo: "/schools/prepa-troyes.webp",
+      school: t("education.schools.cpge.school"),
+      url: "https://www.lyceechrestiendetroyes.fr",
+      location: t("education.schools.cpge.location"),
+      date: t("education.schools.cpge.date"),
+      courses: [
+        t("education.schools.cpge.courses.0"),
+        t("education.schools.cpge.courses.1"),
+        t("education.schools.cpge.courses.2"),
+        t("education.schools.cpge.courses.3"),
+        t("education.schools.cpge.courses.4"),
+      ],
+    },
+  ]
+
+  const experiences: CardItem[] = [
+    {
+      id: "quandela",
+      name: t("experience.items.quandela.name"),
+      logo: "/experiences/quandela.webp",
+      school: t("experience.items.quandela.school"),
+      url: "https://www.quandela.com",
+      location: t("experience.items.quandela.location"),
+      date: t("experience.items.quandela.date"),
+      courses: [
+        t("experience.items.quandela.courses.0"),
+        t("experience.items.quandela.courses.1"),
+        t("experience.items.quandela.courses.2"),
+        t("experience.items.quandela.courses.3"),
+      ],
+    },
+  ]
+
   useEffect(() => {
     const onPageShow = (e: PageTransitionEvent) => {
       if (e.persisted) window.location.reload()
@@ -94,38 +118,38 @@ export default function HomeContent() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <AnimatedCard index={0}>
               <GlassBlogCard
-                title="Communication Protocol Migration"
-                excerpt="Migrated 2 proprietary protocols: QDL (RS485, AVR to STM32) using standard C libraries, and QDL Fast (Ethernet, Linux to STM32) using HAL and FreeRTOS."
+                title={t("projects.items.protocol.title")}
+                excerpt={t("projects.items.protocol.excerpt")}
                 image="/projects/communication-protocol-migration/main.png"
                 url="/projects/communication-protocol-migration"
-                tags={["Embedded", "Protocols"]}
+                tags={t("projects.items.protocol.tags") as unknown as string[]}
               />
             </AnimatedCard>
             <AnimatedCard index={1}>
               <GlassBlogCard
-                title="Multifunction Hub PCB Design"
-                excerpt="Designed a PCB board in Altium integrating Ethernet Hub, RS485 Hub, I2C modules, USB flash, multi-function relays, and servo motors."
+                title={t("projects.items.hub.title")}
+                excerpt={t("projects.items.hub.excerpt")}
                 image="/projects/board-design/main.png"
                 url="/projects/multifunction-hub-pcb-design"
-                tags={["Hardware", "PCB"]}
+                tags={t("projects.items.hub.tags") as unknown as string[]}
               />
             </AnimatedCard>
             <AnimatedCard index={2}>
               <GlassBlogCard
-                title="ENSEM Eco Marathon"
-                excerpt="Design and manufacture of a test bench to measure vehicle performance for a race organized by Shell. Secondary car driver."
+                title={t("projects.items.eco.title")}
+                excerpt={t("projects.items.eco.excerpt")}
                 image="/projects/eco-marathon/main.webp"
                 url="/projects/ensem-eco-marathon"
-                tags={["Automotive", "Testing"]}
+                tags={t("projects.items.eco.tags") as unknown as string[]}
               />
             </AnimatedCard>
             <AnimatedCard index={3}>
               <GlassBlogCard
-                title="Autonomous Robot"
-                excerpt="Controlled an autonomous geolocation robot capable of navigating optimally to a list of coordinates using Python and TCP protocols."
+                title={t("projects.items.robot.title")}
+                excerpt={t("projects.items.robot.excerpt")}
                 image="/projects/autonomous-car/main.png"
                 url="/projects/autonomous-robot"
-                tags={["Robotics", "Autonomous"]}
+                tags={t("projects.items.robot.tags") as unknown as string[]}
               />
             </AnimatedCard>
           </div>
@@ -146,9 +170,9 @@ export default function HomeContent() {
         }
         brandName="Mael"
         socialLinks={[
-          { icon: <Mail className="h-4 w-4" />, href: "mailto:mael.boutsoque@gmail.com", label: "Email" },
-          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>, href: "https://github.com/mael-boutsoque", label: "GitHub" },
-          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>, href: "https://linkedin.com/in/mael-boutsoque", label: "LinkedIn" },
+          { icon: <Mail className="h-4 w-4" />, href: "mailto:mael.boutsoque@gmail.com", label: t("nav.email") },
+          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>, href: "https://github.com/mael-boutsoque", label: t("nav.github") },
+          { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>, href: "https://linkedin.com/in/mael-boutsoque", label: t("nav.linkedin") },
         ]}
         mainLinks={[
           { href: "#hero", label: t("nav.home") },
