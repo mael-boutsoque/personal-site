@@ -152,6 +152,15 @@ export default function HomeContent() {
                 tags={t("projects.items.robot.tags") as unknown as string[]}
               />
             </AnimatedCard>
+            <AnimatedCard index={4}>
+              <GlassBlogCard
+                title={t("projects.items.arduinoSystem.title")}
+                excerpt={t("projects.items.arduinoSystem.excerpt")}
+                image="/projects/arduino-system-design/main.svg"
+                url="/projects/arduino-system-design"
+                tags={t("projects.items.arduinoSystem.tags") as unknown as string[]}
+              />
+            </AnimatedCard>
           </div>
         </AnimatedSection>
       </section>

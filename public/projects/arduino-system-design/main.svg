@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <!-- PCB traces -->
+  <g stroke="#16a34a" stroke-width="2" fill="none" opacity="0.5">
+    <line x1="50" y1="100" x2="250" y2="100"/>
+    <line x1="250" y1="100" x2="250" y2="200"/>
+    <line x1="250" y1="200" x2="400" y2="200"/>
+    <line x1="100" y1="350" x2="300" y2="350"/>
+    <line x1="300" y1="350" x2="300" y2="280"/>
+    <line x1="500" y1="150" x2="650" y2="150"/>
+    <line x1="650" y1="150" x2="650" y2="300"/>
+    <line x1="500" y1="150" x2="500" y2="300"/>
+    <line x1="500" y1="300" x2="650" y2="300"/>
+  </g>
+  <!-- Chip -->
+  <rect x="350" y="160" width="120" height="80" rx="4" fill="#0d1117" stroke="#475569" stroke-width="1.5"/>
+  <g fill="#475569">
+    <rect x="340" y="180" width="10" height="5" rx="1"/>
+    <rect x="340" y="195" width="10" height="5" rx="1"/>
+    <rect x="340" y="210" width="10" height="5" rx="1"/>
+    <rect x="470" y="180" width="10" height="5" rx="1"/>
+    <rect x="470" y="195" width="10" height="5" rx="1"/>
+    <rect x="470" y="210" width="10" height="5" rx="1"/>
+  </g>
+  <!-- LED dots -->
+  <circle cx="580" cy="230" r="5" fill="#f59e0b" opacity="0.9"/>
+  <circle cx="580" cy="260" r="5" fill="#ef4444" opacity="0.9"/>
+  <circle cx="580" cy="290" r="5" fill="#22c55e" opacity="0.9"/>
+  <!-- Resistor symbols -->
+  <g stroke="#94a3b8" stroke-width="1.5" fill="none">
+    <polyline points="150,340 160,330 170,350 180,330 190,350 200,330 210,340"/>
+    <polyline points="250,280 260,270 270,290 280,270 290,290 300,270 310,280"/>
+  </g>
+  <!-- Arduino text -->
+  <text x="400" y="400" text-anchor="middle" font-family="monospace" font-size="16" fill="#475569" opacity="0.6">ARDUINO SYSTEM DESIGN</text>
+</svg>

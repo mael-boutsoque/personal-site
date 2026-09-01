@@ -35,6 +35,14 @@ const projects = {
       "Implemented path planning and real-time control logic so the robot reaches each waypoint efficiently while reacting to its current position.",
     ],
   },
+  "arduino-system-design": {
+    title: "Arduino System Design and Development",
+    excerpt: "Personal projects involving the creation of electronic systems such as a real-time radar, a remote-controlled car, and a robot arm.",
+    detail: [
+      "Several personal projects involving the design and development of original electronic systems, including a real-time radar, a remote-controlled car and a robot arm.",
+      "Each system was built around the Arduino Framework, combining electronic circuit design, embedded programming and mechanical assembly to create fully functional prototypes.",
+    ],
+  },
 }
 
 const projectOrder = Object.keys(projects)

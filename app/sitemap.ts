@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "multifunction-hub-pcb-design",
     "ensem-eco-marathon",
     "autonomous-robot",
+    "arduino-system-design",
   ]
 
   const routes = [

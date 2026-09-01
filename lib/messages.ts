@@ -112,6 +112,12 @@ export const messages = {
             "Controlled an autonomous geolocation robot capable of navigating optimally to a list of coordinates using Python and TCP protocols.",
           tags: ["Robotics", "Autonomous"],
         },
+        arduinoSystem: {
+          title: "Arduino System Design and Development",
+          excerpt:
+            "Personal projects involving the creation of electronic systems such as a real-time radar, a remote-controlled car, and a robot arm.",
+          tags: ["Electronics", "Arduino"],
+        },
       },
     },
     skills: {
@@ -363,6 +369,12 @@ export const messages = {
           excerpt:
             "Commande d'un robot autonome de géolocalisation capable de naviguer de manière optimale vers une liste de coordonnées en utilisant Python et protocoles TCP.",
           tags: ["Robotique", "Autonome"],
+        },
+        arduinoSystem: {
+          title: "Conception et développement de systèmes Arduino",
+          excerpt:
+            "Projets personnels portant sur la création de systèmes électroniques tels qu'un radar temps réel, une voiture télécommandée et un bras robotique.",
+          tags: ["Électronique", "Arduino"],
         },
       },
     },
