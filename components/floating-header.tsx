@@ -50,7 +50,7 @@ function scrollTo(id: string) {
 }
 
 export function FloatingHeader() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState('#hero');
 
@@ -65,7 +65,7 @@ export function FloatingHeader() {
     { label: t('nav.email'), icon: Copy, href: 'mailto:mael.boutsoque@gmail.com' },
     { label: t('nav.github'), icon: ExternalLink, href: 'https://github.com/mael-boutsoque' },
     { label: t('nav.linkedin'), icon: ExternalLink, href: 'https://linkedin.com/in/mael-boutsoque' },
-    { label: t('nav.downloadCv'), icon: FileDown, href: '/CV_EN_complet.pdf' },
+    { label: t('nav.downloadCv'), icon: FileDown, href: lang === 'fr' ? 'https://rxresu.me/mael-boutsoque/fr' : '/CV_EN_complet.pdf' },
   ];
 
   React.useEffect(() => {

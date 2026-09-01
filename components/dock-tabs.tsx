@@ -3,6 +3,7 @@
 import { useState, useRef } from "react"
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion"
 import { FileDown, Copy } from 'lucide-react'
+import { useLanguage } from "@/components/language-provider"
 
 interface DockItem {
   id: string
@@ -124,6 +125,7 @@ function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: Motio
 export function DockTabs() {
   const mouseX = useMotionValue(Infinity)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const { lang } = useLanguage()
 
   const dockItems: DockItem[] = dockItemDefs.map((item) => ({
     ...item,
@@ -133,7 +135,7 @@ export function DockTabs() {
         setCopiedId("copy-mail")
         setTimeout(() => setCopiedId(null), 2000)
       } else if (item.id === "download-cv") {
-        window.open("/CV_EN_complet.pdf", "_blank")
+        window.open(lang === 'fr' ? "https://rxresu.me/mael-boutsoque/fr" : "/CV_EN_complet.pdf", "_blank")
       } else if (item.id === "github") {
         window.open("https://github.com/mael-boutsoque", "_blank")
       } else if (item.id === "linkedin") {
