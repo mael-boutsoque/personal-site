@@ -1,6 +1,26 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import type { Metadata } from "next"
+import { BadgeCheckIcon } from "lucide-react"
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
+import { ProjectGallery } from "@/components/project-gallery"
+import { ProjectFlowingMenu } from "@/components/project-flowing-menu"
+
+const projectImages: Record<string, string> = {
+  "communication-protocol-migration": "/projects/communication-protocol-migration/main.png",
+  "multifunction-hub-pcb-design": "/projects/board-design/main.png",
+  "ensem-eco-marathon": "/projects/eco-marathon/main.webp",
+  "autonomous-robot": "/projects/autonomous-car/main.png",
+  "arduino-system-design": "/projects/arduino-system-design/main.svg",
+}
 
 const projects = {
   "communication-protocol-migration": {
@@ -23,8 +43,18 @@ const projects = {
     title: "ENSEM Eco Marathon",
     excerpt: "Design and manufacture of a test bench to measure vehicle performance for a race organized by Shell. Secondary car driver.",
     detail: [
-      "Contributed to the design and manufacture of a test bench used to measure the performance of an energy-efficient prototype vehicle competing in the Shell Eco-marathon.",
-      "Worked across hardware build and validation while also serving as the secondary driver of the car during testing and the competition.",
+      "Contributed to the ENSEM Eco-marathon team, which builds an energy-efficient hydrogen prototype vehicle (PEMFC fuel cell, carbon-fibre body) to compete in the Shell Eco-marathon.",
+      "Worked across hardware build and validation while also serving as the driver of the car during testing and the competition.",
+    ],
+    images: [
+      { image: "/projects/eco-marathon/bench.png", label: "Banc d'essai (modèle CAO)" },
+      { image: "/projects/eco-marathon/car.jpg", label: "La voiture - cellule hydrogène (PEMFC), corps en fibre de carbone (120 kg)" },
+      { image: "/projects/eco-marathon/competition.jpg", label: "La compétition - organisée par Shell" },
+    ],
+    subProjects: [
+      { title: "Conception de banc d'essai", status: "Fait", description: "Documentation technique, modélisation 3D, approvisionnement en composants" },
+      { title: "Assemblage du banc d'essai", status: "En cours", description: "Assemblage de précision, Alignement d'arbre" },
+      { title: "Pilote", status: "1 compétition", description: "Passer l'inspection technique, Suivre les instructions de la course, 4ème place" },
     ],
   },
   "autonomous-robot": {
@@ -69,6 +99,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     notFound()
   }
 
+  const otherProjects = projectOrder
+    .filter((key) => key !== slug)
+    .map((key) => ({
+      link: `/projects/${key}`,
+      text: projects[key as keyof typeof projects].title,
+      image: projectImages[key],
+    }))
+
   return (
     <main className="min-h-screen px-4 md:px-6 py-24">
       <div className="mx-auto max-w-3xl">
@@ -90,18 +128,44 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           ))}
         </div>
 
-        <nav className="mt-12 border-t pt-6">
+        {"subProjects" in project && project.subProjects.length > 0 && (
+          <div className="mt-10">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              Sub-projects
+            </h2>
+            <ItemGroup className="mt-4">
+              {project.subProjects.map((sub, i) => (
+                <Item key={i} variant="outline" className="bg-white">
+                  <ItemContent>
+                    <ItemTitle>{sub.title}</ItemTitle>
+                    <ItemDescription>{sub.description}</ItemDescription>
+                  </ItemContent>
+                  <ItemActions>
+                    {sub.title === "Pilote" && (
+                      <>
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+                          <BadgeCheckIcon className="size-3.5" />
+                          {sub.status}
+                        </span>
+                      </>
+                    )}
+                  </ItemActions>
+                </Item>
+              ))}
+            </ItemGroup>
+          </div>
+        )}
+
+        {"images" in project && project.images.length > 0 && (
+          <div className="mt-10">
+            <ProjectGallery items={project.images} />
+          </div>
+        )}
+
+        <div className="mt-16">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Other projects</h2>
-          <ul className="mt-3 space-y-2">
-            {projectOrder.filter((key) => key !== slug).map((key) => (
-              <li key={key}>
-                <Link href={`/projects/${key}`} className="text-primary underline-offset-4 hover:underline">
-                  {projects[key as keyof typeof projects].title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <ProjectFlowingMenu items={otherProjects} />
+        </div>
       </div>
     </main>
   )
