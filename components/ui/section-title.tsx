@@ -19,8 +19,10 @@ export function SectionTitle({ id, title, className }: SectionTitleProps) {
         transition={{ duration: 0.3 }}
         className="flex items-baseline gap-4 text-2xl md:text-3xl tracking-tight font-anta text-foreground"
       >
-        <span className="shrink-0">{id}. {title}</span>
-        <div className="flex-1 border-b border-solid border-foreground" />
+        <span className="shrink-0">
+          <span className="text-primary">{id}.</span> {title}
+        </span>
+        <div className="flex-1 border-b border-solid border-primary" />
       </motion.div>
     </div>
   )

@@ -18,7 +18,7 @@ interface FooterProps {
     label: string
   }>
   copyright: {
-    text: string
+    text: React.ReactNode
     license?: string
   }
 }

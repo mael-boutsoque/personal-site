@@ -68,11 +68,11 @@ export function ExperienceAccordion({ items, hoverTitle = "Relevant Coursework" 
                   {s.school}
                 </span>
                 <span className="text-muted-foreground text-xs flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
+                  <MapPin className="h-3 w-3 text-primary" />
                   {s.location}
                 </span>
                 <span className="text-muted-foreground text-xs flex items-center gap-1">
-                  <Calendar className="h-3 w-3" />
+                  <Calendar className="h-3 w-3 text-primary" />
                   {s.date}
                 </span>
               </div>

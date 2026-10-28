@@ -2,6 +2,11 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* HeroUI color swatch picker — imported piecemeal so HeroUI's theme doesn't override the site tokens/radii */
+@import "@heroui/styles/utilities";
+@import "@heroui/styles/variants";
+@import "@heroui/styles/components/color-swatch-picker.css" layer(components);
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -41,6 +46,26 @@
     --color-background: var(--background);
     --muted-foreground: var(----muted-foreground);
     --radius: var(----radius);
+}
+
+/* HeroUI color picker tokens (HeroUI theme variables are not imported) */
+@theme inline {
+    --color-overlay: var(--overlay);
+    --color-overlay-foreground: var(--overlay-foreground);
+    --color-default: var(--secondary);
+    --color-danger: var(--destructive);
+    --color-focus: var(--ring);
+    --shadow-overlay: 0 12px 32px -8px rgb(0 0 0 / 0.18);
+    --ease-smooth: ease;
+}
+
+:root {
+    --overlay: var(--popover);
+    --overlay-foreground: var(--popover-foreground);
+    --cursor-interactive: pointer;
+    --cursor-disabled: not-allowed;
+    --disabled-opacity: 0.5;
+    --ring-offset-width: 2px;
 }
 
 :root {

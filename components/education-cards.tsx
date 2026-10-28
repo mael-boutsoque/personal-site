@@ -89,7 +89,7 @@ export function EducationCards() {
                     transition={{ duration: 0.2 }}
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-border bg-background">
-                      <Icon className="h-6 w-6" />
+                      <Icon className="h-6 w-6 text-primary" />
                     </div>
                     <h3 className="text-sm font-semibold text-foreground leading-tight">
                       {school.degree}

@@ -103,7 +103,7 @@ export function FloatingHeader() {
           className="absolute left-4 top-[14px] md:top-[18px] lg:top-[2px] flex cursor-pointer items-center justify-center size-11 rounded-full bg-background transition-opacity hover:opacity-80"
           onClick={() => scrollTo('#hero')}
         >
-          <svg viewBox="0 0 900 900" className="size-8" fill="currentColor">
+          <svg viewBox="0 0 900 900" className="size-8 text-primary" fill="currentColor">
             <g transform="translate(0,900) scale(0.1,-0.1)">
               <path d="M3020 6065 c-191 -36 -334 -97 -482 -207 -234 -174 -393 -430 -443 -715 -23 -132 -23 -1475 0 -1530 52 -123 182 -182 316 -141 53 16 113 69 141 126 l23 47 5 720 c5 717 5 720 28 788 31 92 113 210 194 277 121 102 252 150 408 150 227 0 413 -104 541 -303 53 -82 79 -171 89 -297 8 -117 25 -163 82 -217 45 -44 96 -63 168 -63 131 0 219 77 249 218 6 29 11 71 11 94 0 106 66 257 155 356 229 253 604 284 870 72 109 -86 180 -198 216 -338 18 -71 19 -116 19 -762 0 -575 2 -694 15 -736 39 -132 179 -203 319 -162 55 16 138 99 154 154 9 31 12 222 12 746 0 763 -2 796 -55 955 -62 183 -141 310 -279 449 -134 134 -251 209 -414 268 -417 149 -881 43 -1193 -275 l-75 -77 -66 68 c-139 145 -317 253 -503 306 -151 44 -365 56 -505 29z" />
               <path d="M4862 5194 c-160 -80 -187 -285 -54 -406 120 -109 313 -72 386 74 49 99 31 204 -49 283 -80 80 -184 98 -283 49z" />
@@ -127,14 +127,14 @@ export function FloatingHeader() {
                       active === link.href ? 'opacity-100' : 'opacity-40',
                     )}
                   >
-                    <link.icon className="size-4" />
+                    <link.icon className="size-4 text-primary" />
                     {link.label}
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="inline-flex items-center gap-1.5 text-sm font-light tracking-wide opacity-40 data-open:opacity-100">
-                  <Mail className="size-4" />
+                  <Mail className="size-4 text-primary" />
                   {t('nav.contact')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="min-w-40">
@@ -153,7 +153,7 @@ export function FloatingHeader() {
                       target={item.href?.startsWith('http') || item.href?.startsWith('/') ? '_blank' : undefined}
                       rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
-                      <item.icon className="size-4" />
+                      <item.icon className="size-4 text-primary" />
                       {item.label}
                     </NavigationMenuLink>
                   ))}
@@ -188,7 +188,7 @@ export function FloatingHeader() {
                     href={link.href}
                     onClick={(e) => { e.preventDefault(); setOpen(false); scrollTo(link.href); }}
                   >
-                    <link.icon className="mr-2 size-4" />
+                    <link.icon className="mr-2 size-4 text-primary" />
                     {link.label}
                   </a>
                 ))}
@@ -207,7 +207,7 @@ export function FloatingHeader() {
                     target={item.href?.startsWith('http') || item.href?.startsWith('/') ? '_blank' : undefined}
                     rel={item.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                   >
-                    <item.icon className="mr-2 size-4" />
+                    <item.icon className="mr-2 size-4 text-primary" />
                     {item.label}
                   </a>
                 ))}

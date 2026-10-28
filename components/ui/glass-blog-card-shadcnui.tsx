@@ -72,7 +72,7 @@ export function GlassBlogCard({
                   <Badge
                     key={index}
                     variant="secondary"
-                    className="bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-colors duration-200"
+                    className="backdrop-blur-sm transition-colors duration-200"
                   >
                     {tag}
                   </Badge>

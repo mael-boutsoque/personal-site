@@ -4,6 +4,8 @@ import { Geist, Anta } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { defaultDescription, siteName } from "@/lib/seo";
 import { siteUrl } from "@/lib/site";
+import { ColorPickerWidget } from "@/components/color-picker-widget";
+import { themeColorPreloadScript } from "@/lib/theme-color";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const anta = Anta({weight:"400",subsets:['latin'],variable:'--font-anta'});
@@ -79,7 +81,9 @@ export default function RootLayout({
               "try{if(location.pathname==='/fr'||location.pathname.startsWith('/fr/'))document.documentElement.lang='fr'}catch(e){}",
           }}
         />
+        <script dangerouslySetInnerHTML={{ __html: themeColorPreloadScript }} />
         {children}
+        <ColorPickerWidget />
       </body>
     </html>
   )

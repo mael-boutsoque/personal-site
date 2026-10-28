@@ -149,7 +149,7 @@ export function Skills() {
                   {tabGroups[cat.key].map((card, i) => (
                     <AnimatedCard key={card.id} index={i}>
                       <Card size="sm" className="flex items-center gap-3 p-3 h-full">
-                        {card.icon && <div className="shrink-0">{card.icon}</div>}
+                        {card.icon && <div className="shrink-0 text-primary">{card.icon}</div>}
                         <div className="min-w-0">
                           <CardTitle className="mb-0.5 text-sm">{card.title}</CardTitle>
                           {card.description && <CardDescription className="text-xs">{card.description}</CardDescription>}

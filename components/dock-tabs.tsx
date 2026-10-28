@@ -9,7 +9,6 @@ interface DockItem {
   id: string
   name: string
   icon: React.ReactNode
-  color: string
   action: () => void
 }
 
@@ -18,10 +17,10 @@ const GithubIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" heig
 const LinkedinIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
 
 const dockItemDefs: Omit<DockItem, "action">[] = [
-  { id: "download-cv", name: "Download CV", icon: <FileDown />, color: "bg-neutral-700" },
-  { id: "copy-mail", name: "Copy Mail", icon: <Copy />, color: "bg-neutral-600" },
-  { id: "github", name: "GitHub", icon: <GithubIcon />, color: "bg-neutral-800" },
-  { id: "linkedin", name: "LinkedIn", icon: <LinkedinIcon />, color: "bg-neutral-700" },
+  { id: "download-cv", name: "Download CV", icon: <FileDown /> },
+  { id: "copy-mail", name: "Copy Mail", icon: <Copy /> },
+  { id: "github", name: "GitHub", icon: <GithubIcon /> },
+  { id: "linkedin", name: "LinkedIn", icon: <LinkedinIcon /> },
 ]
 
 function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: MotionValue<number>; copiedLabel?: string }) {
@@ -53,7 +52,7 @@ function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: Motio
       whileTap={{ scale: 0.95 }}
     >
       <motion.div
-        className={`w-full h-full rounded-xl shadow-lg flex items-center justify-center text-white relative overflow-hidden ${item.color}`}
+        className="w-full h-full rounded-xl shadow-lg flex items-center justify-center bg-primary text-primary-foreground relative overflow-hidden"
         animate={{
           y: isClicked ? 2 : isHovered ? -8 : 0,
         }}
