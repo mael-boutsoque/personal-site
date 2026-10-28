@@ -300,7 +300,7 @@ export const messages = {
       copied: "Copié !",
     },
     hero: {
-      roles: ["Matériel", "Logiciel", "Embarqué"],
+      roles: ["Hardware", "Software", "Embarqué"],
       srTitle: "Ingénieur matériel, logiciel et embarqué",
       engineer: "Ingénieur",
     },
