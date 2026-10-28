@@ -1,10 +1,13 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Legal Notice",
-  description: "Legal notices for the website of Maël Boutsoque: publisher identification, contact details, intellectual property, hosting and personal data policy.",
-}
+  description:
+    "Legal notices for the website of Maël Boutsoque: publisher identification, contact details, intellectual property, hosting and personal data policy.",
+  path: "/legal-notice",
+})
 
 export default function LegalNoticePage() {
   return (

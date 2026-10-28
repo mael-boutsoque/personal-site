@@ -1,29 +1,44 @@
 import type { MetadataRoute } from "next"
+import { projectImages, projectOrder } from "@/lib/projects"
+import { siteUrl } from "@/lib/site"
 
 export const dynamic = "force-static"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://boutsoque.vercel.app"
+  const lastModified = new Date()
 
-  const staticRoutes = ["", "/legal-notice"]
-
-  const projectSlugs = [
-    "communication-protocol-migration",
-    "multifunction-hub-pcb-design",
-    "ensem-eco-marathon",
-    "autonomous-robot",
-    "arduino-system-design",
+  const staticRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${siteUrl}/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 1,
+    },
+    {
+      url: `${siteUrl}/sitemap/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: `${siteUrl}/legal-notice/`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
   ]
 
-  const routes = [
-    ...staticRoutes,
-    ...projectSlugs.map((slug) => `/projects/${slug}`),
-  ]
+  const projectRoutes: MetadataRoute.Sitemap = projectOrder.map((slug) => {
+    const image = projectImages[slug]
 
-  return routes.map((route) => ({
-    url: `${baseUrl}${route}/`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: route === "" ? 1 : 0.7,
-  }))
+    return {
+      url: `${siteUrl}/projects/${slug}/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      ...(image ? { images: [`${siteUrl}${image}`] } : {}),
+    }
+  })
+
+  return [...staticRoutes, ...projectRoutes]
 }

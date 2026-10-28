@@ -24,6 +24,7 @@ export const messages = {
       projects: "Projects",
       hoverTitle: "Missions",
       legalNotice: "Legal Notice",
+      sitemap: "Sitemap",
       rights: "All rights reserved.",
     },
     education: {
@@ -282,6 +283,7 @@ export const messages = {
       projects: "Projets",
       hoverTitle: "Missions",
       legalNotice: "Mentions légales",
+      sitemap: "Plan du site",
       rights: "Tous droits réservés.",
     },
     education: {

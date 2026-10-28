@@ -120,7 +120,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title={t("projects.items.protocol.title")}
                 excerpt={t("projects.items.protocol.excerpt")}
-                image="/projects/communication-protocol-migration/main.png"
+                image="/projects/communication-protocol-migration/main.webp"
                 url="/projects/communication-protocol-migration"
                 tags={t("projects.items.protocol.tags") as unknown as string[]}
               />
@@ -129,7 +129,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title={t("projects.items.hub.title")}
                 excerpt={t("projects.items.hub.excerpt")}
-                image="/projects/board-design/main.png"
+                image="/projects/board-design/main.webp"
                 url="/projects/multifunction-hub-pcb-design"
                 tags={t("projects.items.hub.tags") as unknown as string[]}
               />
@@ -147,7 +147,7 @@ export default function HomeContent() {
               <GlassBlogCard
                 title={t("projects.items.robot.title")}
                 excerpt={t("projects.items.robot.excerpt")}
-                image="/projects/autonomous-car/main.png"
+                image="/projects/autonomous-car/main.webp"
                 url="/projects/autonomous-robot"
                 tags={t("projects.items.robot.tags") as unknown as string[]}
               />
@@ -191,6 +191,7 @@ export default function HomeContent() {
           { href: "#skills", label: t("nav.skills") },
         ]}
         legalLinks={[
+          { href: "/sitemap", label: t("home.sitemap") },
           { href: "/legal-notice", label: t("home.legalNotice") },
         ]}
         copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. ${t("home.rights")}` }}

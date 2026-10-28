@@ -98,7 +98,7 @@ export function FloatingHeader() {
     <header className="fixed top-0 left-0 z-50 w-full">
       <nav className="mx-auto flex items-center justify-center px-4 py-2 max-w-7xl">
         <div
-          className="absolute left-4 flex cursor-pointer items-center justify-center size-11 rounded-full bg-background transition-opacity hover:opacity-80"
+          className="absolute left-4 top-[14px] md:top-[18px] lg:top-[2px] flex cursor-pointer items-center justify-center size-11 rounded-full bg-background transition-opacity hover:opacity-80"
           onClick={() => scrollTo('#hero')}
         >
           <svg viewBox="0 0 900 900" className="size-8" fill="currentColor">
@@ -161,7 +161,7 @@ export function FloatingHeader() {
           </NavigationMenu>
         </div>
 
-        <div className="absolute right-4 flex items-center gap-2">
+        <div className="absolute right-4 top-[22px] md:top-[26px] lg:top-[10px] flex items-center gap-2">
           <LanguageCombobox />
           <Sheet open={open} onOpenChange={setOpen}>
             <Button
