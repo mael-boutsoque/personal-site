@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 interface FooterProps {
   logo: React.ReactNode
   brandName: string
+  homeHref?: string
   socialLinks: Array<{
     icon: React.ReactNode
     href: string
@@ -25,6 +26,7 @@ interface FooterProps {
 export function Footer({
   logo,
   brandName,
+  homeHref = "/",
   socialLinks,
   mainLinks,
   legalLinks,
@@ -35,7 +37,7 @@ export function Footer({
       <div className="px-4 lg:px-8">
         <div className="md:flex md:items-start md:justify-between">
           <a
-            href="/"
+            href={homeHref}
             className="flex items-center gap-x-2"
             aria-label={brandName}
           >

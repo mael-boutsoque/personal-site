@@ -17,17 +17,21 @@ const directionMap: Record<Language, "ltr" | "rtl"> = {
   fr: "ltr",
 }
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = React.useState<Language>("en")
+export function LanguageProvider({
+  children,
+  initialLang = "en",
+}: {
+  children: React.ReactNode
+  initialLang?: Language
+}) {
+  const [lang, setLangState] = React.useState<Language>(initialLang)
 
   React.useEffect(() => {
-    const stored = window.localStorage.getItem("lang") as Language | null
-    if (stored === "en" || stored === "fr") setLangState(stored)
-  }, [])
+    setLangState(initialLang)
+  }, [initialLang])
 
   const setLang = React.useCallback((l: Language) => {
     setLangState(l)
-    window.localStorage.setItem("lang", l)
   }, [])
 
   const t = React.useCallback(
@@ -41,7 +45,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     document.documentElement.lang = lang
-    document.title = messages[lang].meta.title
   }, [lang])
 
   const value = React.useMemo(

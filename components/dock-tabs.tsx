@@ -125,10 +125,18 @@ function DockIcon({ item, mouseX, copiedLabel }: { item: DockItem; mouseX: Motio
 export function DockTabs() {
   const mouseX = useMotionValue(Infinity)
   const [copiedId, setCopiedId] = useState<string | null>(null)
-  const { lang } = useLanguage()
+  const { lang, t } = useLanguage()
+
+  const names: Record<string, string> = {
+    "download-cv": t("nav.downloadCv"),
+    "copy-mail": t("nav.copyMail"),
+    github: "GitHub",
+    linkedin: "LinkedIn",
+  }
 
   const dockItems: DockItem[] = dockItemDefs.map((item) => ({
     ...item,
+    name: names[item.id] ?? item.name,
     action: () => {
       if (item.id === "copy-mail") {
         navigator.clipboard.writeText("mael.boutsoque@gmail.com")
@@ -159,7 +167,7 @@ export function DockTabs() {
       }}
     >
       {dockItems.map((item) => (
-        <DockIcon key={item.id} item={item} mouseX={mouseX} copiedLabel={copiedId === item.id ? "Copied!" : undefined} />
+        <DockIcon key={item.id} item={item} mouseX={mouseX} copiedLabel={copiedId === item.id ? t("nav.copied") : undefined} />
       ))}
     </motion.div>
   )

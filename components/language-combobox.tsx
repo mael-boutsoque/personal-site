@@ -3,7 +3,9 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
 import { useLanguage } from "@/components/language-provider"
+import { switchLocalePath } from "@/lib/i18n"
 import type { Language } from "@/lib/messages"
 
 const options: { value: Language; label: string }[] = [
@@ -13,6 +15,8 @@ const options: { value: Language; label: string }[] = [
 
 export function LanguageCombobox() {
   const { lang, setLang } = useLanguage()
+  const pathname = usePathname()
+  const router = useRouter()
   const [open, setOpen] = React.useState(false)
   const ref = React.useRef<HTMLDivElement>(null)
 
@@ -69,8 +73,12 @@ export function LanguageCombobox() {
                   <button
                     type="button"
                     onClick={() => {
-                      setLang(option.value)
                       setOpen(false)
+                      if (option.value === lang) return
+                      const target = switchLocalePath(pathname, option.value)
+                      const hash = window.location.hash
+                      setLang(option.value)
+                      router.push(hash ? `${target}${hash}` : target)
                     }}
                     className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-sm font-light tracking-wide transition-colors ${
                       active

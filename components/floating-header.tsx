@@ -24,12 +24,14 @@ interface ContactItem {
 }
 
 function isHomePage() {
-  return window.location.pathname === '/' || window.location.pathname === '';
+  const pathname = window.location.pathname
+  return pathname === '/' || pathname === '' || pathname === '/fr' || pathname === '/fr/';
 }
 
 function scrollTo(id: string) {
   if (!isHomePage()) {
-    window.location.assign('/' + id);
+    const prefix = window.location.pathname.startsWith('/fr') ? '/fr/' : '/';
+    window.location.assign(prefix + id);
     return;
   }
   const el = document.getElementById(id.replace('#', ''));

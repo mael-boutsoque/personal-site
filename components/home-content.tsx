@@ -11,9 +11,10 @@ import { AnimatedSection } from "@/components/ui/animated-section"
 import { AnimatedCard } from "@/components/ui/animated-card"
 import { ExperienceAccordion, type CardItem } from "@/components/experience-accordion"
 import { useLanguage } from "@/components/language-provider"
+import { localizedPath } from "@/lib/i18n"
 
 export default function HomeContent() {
-  const { t } = useLanguage()
+  const { t, lang } = useLanguage()
 
   const schools: CardItem[] = [
     {
@@ -121,7 +122,7 @@ export default function HomeContent() {
                 title={t("projects.items.protocol.title")}
                 excerpt={t("projects.items.protocol.excerpt")}
                 image="/projects/communication-protocol-migration/main.webp"
-                url="/projects/communication-protocol-migration"
+                url={localizedPath(lang, "/projects/communication-protocol-migration")}
                 tags={t("projects.items.protocol.tags") as unknown as string[]}
               />
             </AnimatedCard>
@@ -130,7 +131,7 @@ export default function HomeContent() {
                 title={t("projects.items.hub.title")}
                 excerpt={t("projects.items.hub.excerpt")}
                 image="/projects/board-design/main.webp"
-                url="/projects/multifunction-hub-pcb-design"
+                url={localizedPath(lang, "/projects/multifunction-hub-pcb-design")}
                 tags={t("projects.items.hub.tags") as unknown as string[]}
               />
             </AnimatedCard>
@@ -139,7 +140,7 @@ export default function HomeContent() {
                 title={t("projects.items.eco.title")}
                 excerpt={t("projects.items.eco.excerpt")}
                 image="/projects/eco-marathon/main.webp"
-                url="/projects/ensem-eco-marathon"
+                url={localizedPath(lang, "/projects/ensem-eco-marathon")}
                 tags={t("projects.items.eco.tags") as unknown as string[]}
               />
             </AnimatedCard>
@@ -148,7 +149,7 @@ export default function HomeContent() {
                 title={t("projects.items.robot.title")}
                 excerpt={t("projects.items.robot.excerpt")}
                 image="/projects/autonomous-car/main.webp"
-                url="/projects/autonomous-robot"
+                url={localizedPath(lang, "/projects/autonomous-robot")}
                 tags={t("projects.items.robot.tags") as unknown as string[]}
               />
             </AnimatedCard>
@@ -157,7 +158,7 @@ export default function HomeContent() {
                 title={t("projects.items.arduinoSystem.title")}
                 excerpt={t("projects.items.arduinoSystem.excerpt")}
                 image="/projects/arduino-system-design/main.svg"
-                url="/projects/arduino-system-design"
+                url={localizedPath(lang, "/projects/arduino-system-design")}
                 tags={t("projects.items.arduinoSystem.tags") as unknown as string[]}
               />
             </AnimatedCard>
@@ -178,6 +179,7 @@ export default function HomeContent() {
           </svg>
         }
         brandName="Mael"
+        homeHref={localizedPath(lang, "/")}
         socialLinks={[
           { icon: <Mail className="h-4 w-4" />, href: "mailto:mael.boutsoque@gmail.com", label: t("nav.email") },
           { icon: <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>, href: "https://github.com/mael-boutsoque", label: t("nav.github") },
@@ -191,8 +193,8 @@ export default function HomeContent() {
           { href: "#skills", label: t("nav.skills") },
         ]}
         legalLinks={[
-          { href: "/sitemap", label: t("home.sitemap") },
-          { href: "/legal-notice", label: t("home.legalNotice") },
+          { href: localizedPath(lang, "/sitemap"), label: t("home.sitemap") },
+          { href: localizedPath(lang, "/legal-notice"), label: t("home.legalNotice") },
         ]}
         copyright={{ text: `© ${new Date().getFullYear()} Maël Boutsoque. ${t("home.rights")}` }}
       />

@@ -5,6 +5,8 @@ import { motion } from "framer-motion"
 import { Skeleton } from "@/components/ui/skeleton"
 import { DockTabs } from "@/components/dock-tabs"
 import { TextRotate } from "@/components/ui/text-rotate"
+import { useLanguage } from "@/components/language-provider"
+import { messages } from "@/lib/messages"
 
 const Dithering = lazy(() =>
   import("@paper-design/shaders-react").then((mod) => ({ default: mod.Dithering }))
@@ -12,6 +14,8 @@ const Dithering = lazy(() =>
 
 export function CTASection() {
   const [isHovered, setIsHovered] = useState(false)
+  const { lang } = useLanguage()
+  const hero = messages[lang].hero
 
   return (
     <section id="hero" className="py-6 md:py-10 w-full flex justify-center items-center px-4 md:px-6">
@@ -45,9 +49,9 @@ export function CTASection() {
               Mael Boutsoque
             </motion.div>
             <h1 className="text-[clamp(3.5rem,12vw,12rem)] font-black tracking-tight leading-[1.05] font-anta text-primary flex items-center justify-center">
-              <span className="sr-only">Hardware Software Embedded Engineer</span>
+              <span className="sr-only">{hero.srTitle}</span>
               <TextRotate
-                texts={["Hardware", "Software", "Embedded"]}
+                texts={[...hero.roles]}
                 mainClassName="items-center justify-center"
                 rotationInterval={2500}
                 splitBy="characters"
@@ -61,7 +65,7 @@ export function CTASection() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-4 text-3xl md:text-5xl font-semibold text-muted-foreground"
             >
-              Engineer
+              {hero.engineer}
             </motion.p>
           </div>
 

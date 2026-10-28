@@ -12,6 +12,13 @@ export const messages = {
       github: "GitHub",
       linkedin: "LinkedIn",
       downloadCv: "Download CV",
+      copyMail: "Copy email",
+      copied: "Copied!",
+    },
+    hero: {
+      roles: ["Hardware", "Software", "Embedded"],
+      srTitle: "Hardware Software Embedded Engineer",
+      engineer: "Engineer",
     },
     meta: {
       title: "Maël Boutsoque | Digital Systems Engineer",
@@ -26,6 +33,24 @@ export const messages = {
       legalNotice: "Legal Notice",
       sitemap: "Sitemap",
       rights: "All rights reserved.",
+    },
+    sitemap: {
+      title: "Sitemap",
+      metaDescription:
+        "All pages of Maël Boutsoque's portfolio: home, embedded systems and hardware projects, and legal information.",
+      mainPages: "Main pages",
+      home: "Home",
+      homeDescription: " — presentation, experience, skills and projects",
+      legalNotice: "Legal Notice",
+      legalNoticeDescription: " — publisher, hosting and personal data information",
+      projects: "Projects",
+      machineReadable: "Machine-readable version:",
+    },
+    projectPage: {
+      back: "← Back to projects",
+      underDevelopment: "This project page is under development.",
+      subProjects: "Sub-projects",
+      otherProjects: "Other projects",
     },
     education: {
       schools: {
@@ -271,6 +296,13 @@ export const messages = {
       github: "GitHub",
       linkedin: "LinkedIn",
       downloadCv: "Télécharger le CV",
+      copyMail: "Copier l'email",
+      copied: "Copié !",
+    },
+    hero: {
+      roles: ["Matériel", "Logiciel", "Embarqué"],
+      srTitle: "Ingénieur matériel, logiciel et embarqué",
+      engineer: "Ingénieur",
     },
     meta: {
       title: "Maël Boutsoque | Ingénieur Systèmes Numériques",
@@ -285,6 +317,24 @@ export const messages = {
       legalNotice: "Mentions légales",
       sitemap: "Plan du site",
       rights: "Tous droits réservés.",
+    },
+    sitemap: {
+      title: "Plan du site",
+      metaDescription:
+        "Toutes les pages du portfolio de Maël Boutsoque : accueil, projets en systèmes embarqués et matériel, et informations légales.",
+      mainPages: "Pages principales",
+      home: "Accueil",
+      homeDescription: " — présentation, expérience, compétences et projets",
+      legalNotice: "Mentions légales",
+      legalNoticeDescription: " — éditeur, hébergement et données personnelles",
+      projects: "Projets",
+      machineReadable: "Version lisible par les machines :",
+    },
+    projectPage: {
+      back: "← Retour aux projets",
+      underDevelopment: "Cette page projet est en cours de développement.",
+      subProjects: "Sous-projets",
+      otherProjects: "Autres projets",
     },
     education: {
       schools: {

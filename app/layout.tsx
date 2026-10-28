@@ -2,10 +2,6 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Geist, Anta } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { LenisProvider } from "@/components/lenis-provider";
-import { FloatingHeader } from "@/components/floating-header";
-import { LanguageProvider } from "@/components/language-provider";
-import { LoadingScreen } from "@/components/loading-screen";
 import { defaultDescription, siteName } from "@/lib/seo";
 import { siteUrl } from "@/lib/site";
 
@@ -77,13 +73,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable, anta.variable)}>
       <body>
-        <LoadingScreen />
-        <LanguageProvider>
-          <LenisProvider>
-            <FloatingHeader />
-            {children}
-          </LenisProvider>
-        </LanguageProvider>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(location.pathname==='/fr'||location.pathname.startsWith('/fr/'))document.documentElement.lang='fr'}catch(e){}",
+          }}
+        />
+        {children}
       </body>
     </html>
   )
